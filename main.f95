@@ -67,6 +67,10 @@ program HelloWorld
     print *, endingLine
     print *, trim(myFileContents(endingLine))
 
+    do printCounter = 1, endingLine
+        print *, trim(myFileContents(printCounter))
+    end do
+
 
     deallocate(myFileContents)
     deallocate(myFilePath)
