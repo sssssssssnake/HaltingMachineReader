@@ -1,7 +1,7 @@
 
 
 program HelloWorld
-    use fileManager
+    use fileManager, only: readFile
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)

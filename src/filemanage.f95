@@ -1,5 +1,13 @@
 module fileManager
     implicit none
+    
+    private
+    public :: readFile
+    
+
+    character(:), dimension(:), pointer :: fileContentsPointer
+    character(:), allocatable, dimension(:) :: filePath
+
 
 
     
@@ -35,6 +43,8 @@ module fileManager
 
     end subroutine readFile
 
+
+
     subroutine printFileStatus(status)
         integer, intent(in) :: status
         if ( status == 0 ) then
@@ -43,4 +53,7 @@ module fileManager
             print *, "File status: ", status
         end if
     end subroutine printFileStatus
+
+
+
 end module fileManager
