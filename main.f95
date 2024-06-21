@@ -31,13 +31,34 @@ end program HelloWorld
 subroutine readFile(filePath, fileContents)
     character(:), allocatable, intent(in) :: filePath
     character(:), allocatable, intent(out) :: fileContents
-    integer :: iostat, unitNumber, i
-    integer :: fileSize
+    integer :: iostat, unitNumber, i, fileSize
 
     ! Use a named constant for the unit number
     unitNumber = 10
 
     ! Open the file and get its size
+    open(unitNumber, file=filePath, status="old", iostat=iostat)
+    if ( iostat /= 0 ) then
+        print *, "Error opening file"
+        stop
+    end if
+
+    ! Get the file size
+    inquire(unitNumber, size=fileSize) 
+
+    ! Allocate the fileContents variable
+    allocate(character(fileSize) :: fileContents)
+    print *, "File size: ", fileSize
+    print *, "File contents length: ", len(fileContents)
+
+    ! Read the file line by line
+    do i = 1, fileSize
+        read(unitNumber, '(A)', iostat=iostat) fileContents(i:i)
+        if ( iostat /= 0 ) then
+            print *, "Error reading file"
+            stop
+        end if
+    end do
   
 
 end subroutine readFile
