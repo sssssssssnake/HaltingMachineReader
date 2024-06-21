@@ -26,6 +26,7 @@ module fileReader
         do counter = 1, 100
             read(fileUnit, '(A)', iostat=iostat) fileContents(counter)
             if ( iostat /= 0 ) then
+                endingLine = counter - 1
                 exit
             end if
         end do
@@ -59,13 +60,14 @@ program HelloWorld
     myFilePath = "main.f95"
 
     call readFile(myFilePath, myFileContents, endingLine)
-    ! do printCounter = 1, len(myFileContents)
-    !     print *, trim(myFileContents(printCounter))
-        
-    ! end do
+    
     print *, trim(myFileContents(1))
     print *, len(myFileContents)
     print *, len(myFileContents(1))
+    print *, endingLine
+    print *, trim(myFileContents(endingLine))
 
 
+    deallocate(myFileContents)
+    deallocate(myFilePath)
 end program HelloWorld
