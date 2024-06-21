@@ -4,9 +4,10 @@ module fileReader
 
     
     contains
-    subroutine readFile(filePath, fileContents)
+    subroutine readFile(filePath, fileContents, endingLine)
         character(:), allocatable, intent(in) :: filePath
-        character(:), allocatable, intent(out) :: fileContents(:, :)
+        character(:), allocatable, intent(out) :: fileContents(:)
+        integer, intent(out) :: endingLine
 
         integer :: counter, fileSize, fileUnit, iostat
 
@@ -19,7 +20,15 @@ module fileReader
 
         ! allocate the worst case scenarios at the same time
         ! There could be one long line in the file or many one character lines
-        allocate(fileContents(fileSize, fileSize))
+        allocate(character(fileSize) :: fileContents(fileSize))
+
+        counter = 1
+        do counter = 1, 100
+            read(fileUnit, '(A)', iostat=iostat) fileContents(counter)
+            if ( iostat /= 0 ) then
+                exit
+            end if
+        end do
 
 
 
@@ -39,8 +48,8 @@ program HelloWorld
     use fileReader
     implicit none
     character(:), allocatable :: myFilePath
-    character(:), allocatable :: myFileContents(:, :)
-    integer :: index
+    character(:), allocatable :: myFileContents(:)
+    integer :: printCounter, endingLine
 
     ! interface for readFile subroutine
     
@@ -49,8 +58,14 @@ program HelloWorld
     print *, "Hello, World!"
     myFilePath = "main.f95"
 
-    call readFile(myFilePath, myFileContents)
-    ! print *, myFileContents
-    ! print *, len(myFileContents)
+    call readFile(myFilePath, myFileContents, endingLine)
+    ! do printCounter = 1, len(myFileContents)
+    !     print *, trim(myFileContents(printCounter))
+        
+    ! end do
+    print *, trim(myFileContents(1))
+    print *, len(myFileContents)
+    print *, len(myFileContents(1))
+
 
 end program HelloWorld
