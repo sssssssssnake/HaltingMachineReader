@@ -57,6 +57,7 @@ subroutine readFile(filePath, fileContents)
     print *, "error status: ", iostat
 
     ! Read the file 
+    ! turns out read literally reads line by line and the rewind function is needed to read the file again
     read(unitNumber, '(A)', iostat=iostat) fileContents
     read(unitNumber, '(A)', iostat=iostat) testChar
     print *, "error status: ", iostat
