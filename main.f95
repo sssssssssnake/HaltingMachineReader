@@ -1,3 +1,40 @@
+module fileReader
+    implicit none
+
+
+    
+    contains
+    subroutine readFile(filePath, fileContents)
+        character(:), allocatable, intent(in) :: filePath
+        character(:), allocatable, intent(out) :: fileContents(:, :)
+
+        integer :: counter, fileSize, fileUnit, iostat
+
+        fileUnit = 10
+
+        open(newunit=fileUnit, file=filePath, status='old', action='read', iostat=iostat)
+        inquire(fileUnit, size=fileSize)
+        print *, "fileSize: ", fileSize
+        call printFileStatus(iostat)
+
+        ! allocate the worst case scenarios at the same time
+        ! There could be one long line in the file or many one character lines
+        allocate(fileContents(fileSize, fileSize))
+
+
+
+    end subroutine readFile
+
+    subroutine printFileStatus(status)
+        integer, intent(in) :: status
+        if ( status == 0 ) then
+            print *, "File status: OK"
+        else
+            print *, "File status: ", status
+        end if
+    end subroutine printFileStatus
+end module fileReader
+
 program HelloWorld
     use fileReader
     implicit none
@@ -17,34 +54,3 @@ program HelloWorld
     ! print *, len(myFileContents)
 
 end program HelloWorld
-
-module fileReader
-    implicit none
-
-    contains
-    subroutine readFile(filePath, fileContents)
-        character(:), allocatable, intent(in) :: filePath
-        character(:), allocatable, intent(out) :: fileContents(:, :)
-
-        integer :: counter, fileSize, fileUnit, iostat
-
-        fileUnit = 10
-
-        open(newunit=fileUnit, file=filePath, status='old', action='read', iostat=iostat)
-        inquire(fileUnit, size=fileSize)
-        print *, "fileSize: ", fileSize
-        call printFileStatus(iostat)
-
-
-
-    end subroutine readFile
-
-    subroutine printFileStatus(status)
-        integer, intent(in) :: status
-        if ( status == 0 ) then
-            print *, "File status: OK"
-        else
-            print *, "File status: ", status
-        end if
-    end subroutine printFileStatus
-end module fileReader
