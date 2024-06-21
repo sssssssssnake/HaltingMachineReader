@@ -32,6 +32,7 @@ subroutine readFile(filePath, fileContents)
     character(:), allocatable, intent(in) :: filePath
     character(:), allocatable, intent(out) :: fileContents
     integer :: iostat, unitNumber, i, fileSize
+    character(100) :: testChar
 
     ! Use a named constant for the unit number
     unitNumber = 10
@@ -55,16 +56,11 @@ subroutine readFile(filePath, fileContents)
     print *, "Reading file"
     print *, "error status: ", iostat
 
-    ! Read the file line by line
-    do i = 1, fileSize
-        read(unitNumber, '(A)', iostat=iostat) fileContents(i:i)
-        if ( iostat /= 0 ) then
-            print *, "Error reading file"
-            print *, "error status: ", iostat
-            print *, "i: ", i
-            stop
-        end if
-    end do
+    ! Read the file 
+    read(unitNumber, '(A)', iostat=iostat) fileContents
+    read(unitNumber, '(A)', iostat=iostat) testChar
+    print *, "error status: ", iostat
+    print *, "testChar: ", testChar
   
 
 end subroutine readFile
