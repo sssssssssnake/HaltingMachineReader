@@ -3,13 +3,14 @@ program HelloWorld
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents
 
-    ! needs interface to be able to use the subroutine
-    interface myInt
+    ! interface for readFile subroutine
+    interface
         subroutine readFile(filePath, fileContents)
             character(:), allocatable, intent(in) :: filePath
             character(:), allocatable, intent(out) :: fileContents
         end subroutine readFile
-    end interface myInt
+    end interface
+
     ! Main program
     print *, "Hello, World!"
     myFilePath = "main.f95"
@@ -19,18 +20,36 @@ program HelloWorld
 
 end program HelloWorld
 
-
-
-
 subroutine readFile(filePath, fileContents)
     character(:), allocatable, intent(in) :: filePath
     character(:), allocatable, intent(out) :: fileContents
-    ! now to read the file
-    ! allocate the fileContents for the size of the file
-    allocate(character(1000) :: fileContents)
-    open(10, file=filePath, status='old', action='read')
-    read(10, '(A)') fileContents
-    close(10)
+    integer :: iostat, unitNumber
+    integer :: fileSize
 
+    ! Use a named constant for the unit number
+    unitNumber = 10
+
+    ! Open the file and get its size
+    open(unit=unitNumber, file=filePath, status='old', action='read', iostat=iostat)
+    if (iostat /= 0) then
+        print *, "Error opening file!"
+        return
+    endif
+
+    ! Get the size of the file
+    inquire(unit=unitNumber, size=fileSize)
     
+    ! Allocate fileContents based on the actual size of the file
+    allocate(character(fileSize) :: fileContents)
+
+    ! Read the entire contents of the file into fileContents
+    rewind(unitNumber)
+    read(unitNumber, '(A)', iostat=iostat) fileContents
+    if (iostat /= 0) then
+        print *, "Error reading file!"
+        return
+    endif
+
+    close(unit=unitNumber)
+
 end subroutine readFile
