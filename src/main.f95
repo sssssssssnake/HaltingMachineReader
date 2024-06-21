@@ -1,7 +1,7 @@
 
 
 program HelloWorld
-    use fileReader
+    use fileManager
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
@@ -16,10 +16,6 @@ program HelloWorld
     call readFile(myFilePath, myFileContents, endingLine)
     
 
-
-    do printCounter = 1, endingLine
-        print *, trim(myFileContents(printCounter))
-    end do
 
 
     deallocate(myFileContents)

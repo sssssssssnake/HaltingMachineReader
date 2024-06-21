@@ -1,4 +1,4 @@
-module fileReader
+module fileManager
     implicit none
 
 
@@ -43,4 +43,4 @@ module fileReader
             print *, "File status: ", status
         end if
     end subroutine printFileStatus
-end module fileReader
+end module fileManager
