@@ -4,7 +4,7 @@ run: build
 	@echo "Running the program..."
 	@./program
 	@#clean
-	@make clean
+	@$(MAKE) clean
 
 build: clean
 	@# compile the program
