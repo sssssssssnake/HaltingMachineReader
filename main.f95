@@ -1,17 +1,12 @@
 program HelloWorld
+    use fileReader
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:, :)
     integer :: index
 
     ! interface for readFile subroutine
-    interface
-        subroutine readFile(filePath, fileContents)
-            character(:), allocatable, intent(in) :: filePath
-            character(:), allocatable, intent(out) :: fileContents (:, :)
-                    
-        end subroutine readFile
-    end interface
+    
 
     ! Main program
     print *, "Hello, World!"
@@ -23,17 +18,33 @@ program HelloWorld
 
 end program HelloWorld
 
-subroutine readFile(filePath, fileContents)
-    character(:), allocatable, intent(in) :: filePath
-    character(:), allocatable, intent(out) :: fileContents(:, :)
+module fileReader
+    implicit none
 
-    integer :: counter, fileSize, fileUnit
+    contains
+    subroutine readFile(filePath, fileContents)
+        character(:), allocatable, intent(in) :: filePath
+        character(:), allocatable, intent(out) :: fileContents(:, :)
 
-    fileUnit = 10
+        integer :: counter, fileSize, fileUnit, iostat
 
-    open(newunit=fileUnit, file=filePath, status='old', action='read')
-    inquire(fileUnit, size=fileSize)
-    print *, "fileSize: ", fileSize
+        fileUnit = 10
+
+        open(newunit=fileUnit, file=filePath, status='old', action='read', iostat=iostat)
+        inquire(fileUnit, size=fileSize)
+        print *, "fileSize: ", fileSize
+        call printFileStatus(iostat)
 
 
-end subroutine readFile
+
+    end subroutine readFile
+
+    subroutine printFileStatus(status)
+        integer, intent(in) :: status
+        if ( status == 0 ) then
+            print *, "File status: OK"
+        else
+            print *, "File status: ", status
+        end if
+    end subroutine printFileStatus
+end module fileReader
