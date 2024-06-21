@@ -56,16 +56,11 @@ program HelloWorld
     
 
     ! Main program
-    print *, "Hello, World!"
     myFilePath = "main.f95"
 
     call readFile(myFilePath, myFileContents, endingLine)
     
-    print *, trim(myFileContents(1))
-    print *, len(myFileContents)
-    print *, len(myFileContents(1))
-    print *, endingLine
-    print *, trim(myFileContents(endingLine))
+
 
     do printCounter = 1, endingLine
         print *, trim(myFileContents(printCounter))
