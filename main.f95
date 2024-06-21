@@ -2,6 +2,7 @@ program HelloWorld
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents
+    integer :: index
 
     ! interface for readFile subroutine
     interface
@@ -17,13 +18,20 @@ program HelloWorld
     call readFile(myFilePath, myFileContents)
     print *, myFileContents
     print *, len(myFileContents)
+    ! do index = 1, 1000
+    !     if ( myFileContents(index:index) == "" ) then
+    !         print *, "End of file"
+    !     else
+    !         print *, myFileContents(index:index)
+    !     end if
+    ! end do
 
 end program HelloWorld
 
 subroutine readFile(filePath, fileContents)
     character(:), allocatable, intent(in) :: filePath
     character(:), allocatable, intent(out) :: fileContents
-    integer :: iostat, unitNumber
+    integer :: iostat, unitNumber, i
     integer :: fileSize
 
     ! Use a named constant for the unit number
@@ -44,12 +52,10 @@ subroutine readFile(filePath, fileContents)
 
     ! Read the entire contents of the file into fileContents
     rewind(unitNumber)
-    read(unitNumber, '(A)', iostat=iostat) fileContents
-    if (iostat /= 0) then
-        print *, "Error reading file!"
-        return
-    endif
+    do i = 1, fileSize
+        read(unitNumber, '(A)', iostat=iostat) fileContents(i:i)
+        if (iostat /= 0) exit
+    end do
 
     close(unit=unitNumber)
-
 end subroutine readFile
