@@ -51,11 +51,17 @@ subroutine readFile(filePath, fileContents)
     print *, "File size: ", fileSize
     print *, "File contents length: ", len(fileContents)
 
+
+    print *, "Reading file"
+    print *, "error status: ", iostat
+
     ! Read the file line by line
     do i = 1, fileSize
         read(unitNumber, '(A)', iostat=iostat) fileContents(i:i)
         if ( iostat /= 0 ) then
             print *, "Error reading file"
+            print *, "error status: ", iostat
+            print *, "i: ", i
             stop
         end if
     end do
