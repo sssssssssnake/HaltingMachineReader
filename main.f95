@@ -38,24 +38,6 @@ subroutine readFile(filePath, fileContents)
     unitNumber = 10
 
     ! Open the file and get its size
-    open(unit=unitNumber, file=filePath, status='old', action='read', iostat=iostat)
-    if (iostat /= 0) then
-        print *, "Error opening file!"
-        return
-    endif
+  
 
-    ! Get the size of the file
-    inquire(unit=unitNumber, size=fileSize)
-    
-    ! Allocate fileContents based on the actual size of the file
-    allocate(character(fileSize) :: fileContents)
-
-    ! Read the entire contents of the file into fileContents
-    rewind(unitNumber)
-    do i = 1, fileSize
-        read(unitNumber, '(A)', iostat=iostat) fileContents(i:i)
-        if (iostat /= 0) exit
-    end do
-
-    close(unit=unitNumber)
 end subroutine readFile
