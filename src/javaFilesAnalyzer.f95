@@ -34,11 +34,13 @@ module JavaFilesAnalyzer
         character(:), allocatable :: keyword, packageKeyword
         character(:), allocatable :: lineContent
         character(:), allocatable :: keyPaths(:)
+        character(:), allocatable :: javaPackageParsed, semiColon, packageContent
 
         nubmerOfImports = 0
         keyPathsCounter = 1
         keyword = "import "
         packageKeyword = "package "
+        semiColon = ";"
         hasPackage = .false.
 
         
@@ -110,7 +112,10 @@ module JavaFilesAnalyzer
             print *, trim(javaPackages(i))
         end do
 
-
+        packageContent = javaPackages(1)
+        packageKeyword = "package "
+        javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
+        print *, "parsed package: '", javaPackageParsed, "'"
 
 
 
