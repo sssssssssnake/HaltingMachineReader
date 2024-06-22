@@ -8,17 +8,19 @@ program HelloWorld
     character(:), allocatable :: myFileContents(:)
     integer :: endingLine
 
-    ! interface for readFile subroutine
     
 
-    ! Main program
-    myFilePath = "javacode/Main.java"
++    myFilePath = "javacode/Main.java"
 
+    ! Read the file
     call readFile(myFilePath, myFileContents, endingLine)
+
+    ! Analyze the file
     call setMainFileContent(myFileContents)
     call findImportantJavaFiles(endingLine)
 
 
+    ! Deallocate the memory
     deallocate(myFileContents)
     deallocate(myFilePath)
 end program HelloWorld
