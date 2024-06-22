@@ -10,7 +10,7 @@ program HelloWorld
 
     
 
-    myFilePath = "javacode/Main.java"
+    myFilePath = "../test.txt"
 
     ! Read the file
     call readFile(myFilePath, myFileContents, endingLine)

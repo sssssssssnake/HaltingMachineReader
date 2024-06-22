@@ -9,8 +9,6 @@ module fileManager
     character(:), allocatable, dimension(:) :: mainFileContent
 
 
-
-    
     contains
     !> Reads the contents of a file specified by the given file path.
     !! 
@@ -64,7 +62,7 @@ module fileManager
 
     subroutine printFileStatus(status)
         integer, intent(in) :: status
-        if ( status == 0 ) then
+        if ( status .eq. 0 ) then
             print *, "File status: OK"
         else
             print *, "File status: ", status
