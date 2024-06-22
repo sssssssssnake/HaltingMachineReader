@@ -2,7 +2,7 @@
 
 program HelloWorld
     use fileManager, only: readFile
-    use JavaFilesAnalyzer, only: findImportantJavaFiles
+    use JavaFilesAnalyzer, only: printMainFileContent
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
@@ -12,7 +12,7 @@ program HelloWorld
     
 
     ! Main program
-    myFilePath = "src/main.f95"
+    myFilePath = "javacode/Main.java"
 
     call readFile(myFilePath, myFileContents, endingLine)
 
