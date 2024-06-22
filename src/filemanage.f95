@@ -88,6 +88,13 @@ module fileManager
     
     end function containsString
 
+    !> Gets the text between two strings.
+    !!
+    !! @param lineToAnalyze The line to be analyzed.
+    !! @param startString The string that marks the start of the text to be extracted.
+    !! @param endString The string that marks the end of the text to be extracted.
+    !!
+    !! @return the text between the two strings.
     function getTextBetweenStrings(lineToAnalyze, startString, endString) result(textBetweenStrings)
         character(:), allocatable, intent(in) :: lineToAnalyze
         character(:), allocatable, intent(in) :: startString
@@ -100,8 +107,26 @@ module fileManager
         endStringIndex = index(lineToAnalyze, endString) - 1
 
         textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
-
     end function getTextBetweenStrings
+
+    function replaceCharacterInString(lineToReplace, characterToReplace, replacementCharacter) result(replacedLine)
+        character(:), allocatable, intent(in) :: lineToReplace
+        character, intent(in) :: characterToReplace
+        character, intent(in) :: replacementCharacter
+        character(:), allocatable :: replacedLine
+
+        integer :: i
+
+        allocate(character(len(lineToReplace)) :: replacedLine)
+
+        do i = 1, len(lineToReplace)
+            if ( lineToReplace(i:i) == characterToReplace ) then
+                replacedLine(i:i) = replacementCharacter
+            else
+                replacedLine(i:i) = lineToReplace(i:i)
+            end if
+        end do
+    end function replaceCharacterInString
 
 
 
