@@ -22,3 +22,8 @@ clean:
 	@if [ -f javaFilesAnalyzer.o ]; then rm javaFilesAnalyzer.o; fi
 	@if [ -f javafilesanalyzer.mod ]; then rm -f javafilesanalyzer.mod; fi
 	@if [ -f file10 ]; then rm file10; fi
+
+
+runkeep: build
+	@echo "Running the program..."
+	@./program
