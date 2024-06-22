@@ -1,12 +1,13 @@
 module fileManager
+    use JavaFilesAnalyzer, only : setMainFileContent
     implicit none
     
     private
     public :: readFile
-    
 
-    character(:), dimension(:), pointer :: fileContentsPointer
-    character(:), allocatable, dimension(:) :: filePath
+
+    character(:), allocatable :: reusableFilePath
+    character(:), allocatable, dimension(:) :: mainFileContent
 
 
 
@@ -18,6 +19,8 @@ module fileManager
         integer, intent(out) :: endingLine
 
         integer :: counter, fileSize, fileUnit, iostat
+        character(:),dimension(:), allocatable, target :: filecontTest
+
 
         fileUnit = 10
 
@@ -39,6 +42,9 @@ module fileManager
             end if
         end do
 
+        reusableFilePath = filePath
+        mainFileContent = fileContents
+        call setMainFileContent(mainFileContent)
 
 
     end subroutine readFile
