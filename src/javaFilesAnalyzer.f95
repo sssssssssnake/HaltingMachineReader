@@ -49,7 +49,9 @@ module JavaFilesAnalyzer
             if ( containsString(packageKeyword, lineContent) ) then
                 print *, "found package line:"
                 print *, "lineContent: ", trim(lineContent), " i = ", i
+                allocate(character(256) :: javaPackages(1))
                 javaPackages(1) = lineContent
+                print *, "javaPackages(1): ", javaPackages(1)
                 packageLine = i
                 hasPackage = .true.
                 exit lookForPackages
@@ -85,7 +87,7 @@ module JavaFilesAnalyzer
         print *, "Length of keyPaths: ", size(keyPaths)
 
         do i = 1, size(keyPaths)
-            print *, keyPaths(i)
+            print *, trim(keyPaths(i))
         end do
 
 
