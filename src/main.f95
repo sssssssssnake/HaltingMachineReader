@@ -2,11 +2,11 @@
 
 program HelloWorld
     use fileManager, only: readFile
-    use JavaFilesAnalyzer, only: findImportantJavaFiles, printMainFileContent
+    use JavaFilesAnalyzer, only: findImportantJavaFiles
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
-    integer :: printCounter, endingLine
+    integer :: endingLine
 
     ! interface for readFile subroutine
     

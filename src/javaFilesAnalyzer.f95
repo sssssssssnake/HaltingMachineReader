@@ -13,7 +13,10 @@ module JavaFilesAnalyzer
     
     contains
 
-    subroutine findImportantJavaFiles()
+    subroutine findImportantJavaFiles(lastLine)
+        integer, intent(in) :: lastLine
+        integer :: i
+        
 
     end subroutine findImportantJavaFiles
 
