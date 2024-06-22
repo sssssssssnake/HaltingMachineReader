@@ -84,7 +84,7 @@ module fileManager
         ! default value is false
         isInString = .false.
 
-        if ( index(searchString, keyword) .ge. 0 ) then
+        if ( index(searchString, keyword) .gt. 0 ) then
             isInString = .true.
         end if
 
