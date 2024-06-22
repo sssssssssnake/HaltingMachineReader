@@ -23,12 +23,13 @@ module JavaFilesAnalyzer
         integer :: i
         integer :: nubmerOfImports, packageLine, packageLineTrue
         logical :: hasImport, hasPackage
-        character(:), allocatable :: keyword
+        character(:), allocatable :: keyword, packageKeyword
         character(:), allocatable :: lineContent
         character(:), allocatable :: keyPaths(:)
 
         nubmerOfImports = 0
         keyword = "import"
+        packageKeyword = "package"
 
         
         do i = 1, lastLine
@@ -43,7 +44,7 @@ module JavaFilesAnalyzer
         packageLine = 0
         lookForPackages: do i = 1, lastLine
             lineContent = mainFileContent(i)
-            if ( index(lineContent, "package") > 0 ) then
+            if ( containsString(packageKeyword, lineContent) ) then
                 javaPackages = lineContent
                 packageLine = i
                 hasPackage = .true.
