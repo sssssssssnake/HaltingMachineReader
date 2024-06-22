@@ -38,7 +38,6 @@ module fileManager
 
         open(newunit=fileUnit, file=filePath, status='old', action='read', iostat=iostat)
         inquire(fileUnit, size=fileSize)
-        print *, "fileSize: ", fileSize
         call printFileStatus(iostat)
 
         ! allocate the worst case scenarios at the same time
@@ -57,8 +56,9 @@ module fileManager
         reusableFilePath = filePath
         mainFileContent = fileContents
         call setMainFileContent(mainFileContent)
-        print *, "location of (fileContents)", loc(fileContents)
         deallocate(fileContents)
+
+        print *, "Read file: ", reusableFilePath
 
 
     end subroutine readFile
