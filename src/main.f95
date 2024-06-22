@@ -10,7 +10,7 @@ program HelloWorld
 
     
 
-+    myFilePath = "javacode/Main.java"
+    myFilePath = "javacode/Main.java"
 
     ! Read the file
     call readFile(myFilePath, myFileContents, endingLine)
