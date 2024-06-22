@@ -3,7 +3,7 @@ module JavaFilesAnalyzer
     implicit none
     
     private
-    public :: setMainFileContent, findImportantJavaFiles
+    public :: setMainFileContent, findImportantJavaFiles, printMainFileContent
 
     character(:), allocatable, dimension(:) :: javaImports
     character(:), allocatable, dimension(:) :: javaPackages
@@ -21,6 +21,14 @@ module JavaFilesAnalyzer
         character(:), dimension(:), allocatable, intent(in) :: fileContent
         mainFileContent = fileContent
     end subroutine setMainFileContent
+
+    subroutine printMainFileContent(endLine)
+        integer, intent(in) :: endLine
+        integer :: i
+        do i = 1, endLine
+            print *, trim(mainFileContent(i))
+        end do
+    end subroutine printMainFileContent
 
     
 

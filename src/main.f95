@@ -2,7 +2,7 @@
 
 program HelloWorld
     use fileManager, only: readFile
-    use JavaFilesAnalyzer, only: findImportantJavaFiles
+    use JavaFilesAnalyzer, only: findImportantJavaFiles, printMainFileContent
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
@@ -15,10 +15,7 @@ program HelloWorld
     myFilePath = "src/main.f95"
 
     call readFile(myFilePath, myFileContents, endingLine)
+    call printMainFileContent(endingLine)
     
-
-
-
-    deallocate(myFileContents)
     deallocate(myFilePath)
 end program HelloWorld
