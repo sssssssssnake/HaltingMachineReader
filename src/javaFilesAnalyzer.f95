@@ -18,13 +18,15 @@ module JavaFilesAnalyzer
     subroutine findImportantJavaFiles(lastLine)
         integer, intent(in) :: lastLine
         integer :: i
-        integer :: nubmerOfImports
+        integer :: nubmerOfImports, packageLine
         logical :: hasImport
         character(:), allocatable :: keyword
         character(:), allocatable :: lineContent
 
         nubmerOfImports = 0
         keyword = "import"
+
+        
         do i = 1, lastLine
             lineContent = mainFileContent(i)
             ! use the containsString function from the fileManager module
@@ -34,7 +36,19 @@ module JavaFilesAnalyzer
             end if
         end do
 
+        lookForPackages: do i = 1, lastLine
+            lineContent = mainFileContent(i)
+            if ( index(lineContent, "package") > 0 ) then
+                javaPackages = lineContent
+                packageLine = i
+                exit lookForPackages
+            end if
+        end do lookForPackages
+
+
+
         print *, "number of imports: ", nubmerOfImports
+        print *, "location of javaPackages: "
 
     end subroutine findImportantJavaFiles
 
