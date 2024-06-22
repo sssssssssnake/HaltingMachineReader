@@ -1,5 +1,5 @@
 module JavaFilesAnalyzer
-    ! use fileManager, only: readFile
+    ! use fileManager, only: containsString
     implicit none
     
     private
@@ -17,10 +17,17 @@ module JavaFilesAnalyzer
         integer, intent(in) :: lastLine
         integer :: i
         integer :: nubmerOfImports
+        logical :: hasImport
 
         nubmerOfImports = 0
+        do i = 1, lastLine
+            ! hasImport = containsString(mainFileContent(i), "import")
+            if ( hasImport ) then
+                nubmerOfImports = nubmerOfImports + 1
+            end if
+        end do
 
-        
+        print *, "number of imports: ", nubmerOfImports
 
     end subroutine findImportantJavaFiles
 

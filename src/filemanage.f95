@@ -3,7 +3,7 @@ module fileManager
     implicit none
     
     private
-    public :: readFile
+    public :: readFile, containsString
 
 
     character(:), allocatable :: reusableFilePath
@@ -90,6 +90,7 @@ module fileManager
         if ( index(searchString, keyword) > 0 ) then
             isInString = .true.
         end if
+
     
     end function containsString
 
