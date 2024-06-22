@@ -1,5 +1,5 @@
 module JavaFilesAnalyzer
-    ! use fileManager, only: containsString
+    use fileManager, only: containsString
     implicit none
     
     private
@@ -18,10 +18,15 @@ module JavaFilesAnalyzer
         integer :: i
         integer :: nubmerOfImports
         logical :: hasImport
+        character(:), allocatable :: keyword
+        character(:), allocatable :: lineContent
 
         nubmerOfImports = 0
+        keyword = "import"
         do i = 1, lastLine
-            ! hasImport = containsString(mainFileContent(i), "import")
+            lineContent = mainFileContent(i)
+            ! use the containsString function from the fileManager module
+            hasImport = containsString(keyword, lineContent)
             if ( hasImport ) then
                 nubmerOfImports = nubmerOfImports + 1
             end if
