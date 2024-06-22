@@ -87,10 +87,9 @@ module JavaFilesAnalyzer
 
         if ( hasPackage ) then
             allocate(character(256) :: javaImports(nubmerOfImports))
-            do i= 1, (size(javaPackages) - 1)
+            do i= 1, nubmerOfImports
                 javaImports(i) = keyPaths(i)
             end do
-            javaImports(nubmerOfImports) = javaPackages(1)
         end if
 
         ! print the imports and paths for debugging
