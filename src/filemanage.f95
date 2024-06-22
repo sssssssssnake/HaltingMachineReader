@@ -13,6 +13,18 @@ module fileManager
 
     
     contains
+    !> Reads the contents of a file specified by the given file path.
+    !! 
+    !! @param filePath The path of the file to be read.
+    !! @param fileContents The contents of the file.
+    !! @param endingLine The line number where the file reading should stop.
+    !! 
+    !! @return the file contents in the second argument and the line number where the file reading stopped in the third argument.
+    !! 
+    !! Note: This subroutine assumes that the file exists and is accessible.
+    !! The file contents are stored in the `fileContents` variable.
+    !! The file reading stops at the line specified by `endingLine`.
+    !!
     subroutine readFile(filePath, fileContents, endingLine)
         character(:), allocatable, intent(in) :: filePath
         character(:), allocatable, intent(out) :: fileContents(:)
