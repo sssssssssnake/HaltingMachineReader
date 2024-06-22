@@ -5,6 +5,7 @@ module JavaFilesAnalyzer
     private
     public :: setMainFileContent, findImportantJavaFiles, printMainFileContent
 
+    character(:), allocatable :: sourceDirectory
     character(:), allocatable, dimension(:) :: javaImports
     character(:), allocatable, dimension(:) :: javaPackages
 
@@ -82,6 +83,28 @@ module JavaFilesAnalyzer
         do i = 1, size(keyPaths)
             print *, trim(keyPaths(i))
         end do
+
+
+        if ( hasPackage ) then
+            allocate(character(256) :: javaImports(nubmerOfImports))
+            do i= 1, (size(javaPackages) - 1)
+                javaImports(i) = keyPaths(i)
+            end do
+            javaImports(nubmerOfImports) = javaPackages(1)
+        end if
+
+        ! print the imports and paths for debugging
+        print *, "Length of javaImports: ", size(javaImports)
+        do i = 1, size(javaImports)
+            print *, trim(javaImports(i))
+        end do
+
+        print *, "Length of javaPackages: ", size(javaPackages)
+        do i = 1, size(javaPackages)
+            print *, trim(javaPackages(i))
+        end do
+
+
 
 
 
