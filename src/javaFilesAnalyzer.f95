@@ -11,6 +11,13 @@ module JavaFilesAnalyzer
 
     character(:), dimension(:), allocatable :: mainFileContent
 
+    type :: JavaFile
+        character(:), allocatable :: relativeFilePath
+        character(:), allocatable :: className
+        character(:), allocatable :: packageName
+        character(:), allocatable, dimension(:) :: imports
+    end type JavaFile
+
     
     contains
 
