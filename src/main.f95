@@ -2,6 +2,7 @@
 
 program HelloWorld
     use fileManager, only: readFile
+    use JavaFilesAnalyzer, only: findImportantJavaFiles
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)

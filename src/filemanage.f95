@@ -45,6 +45,7 @@ module fileManager
         reusableFilePath = filePath
         mainFileContent = fileContents
         call setMainFileContent(mainFileContent)
+        deallocate(fileContents)
 
 
     end subroutine readFile

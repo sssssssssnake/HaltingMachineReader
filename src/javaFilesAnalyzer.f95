@@ -3,7 +3,7 @@ module JavaFilesAnalyzer
     implicit none
     
     private
-    public :: setMainFileContent
+    public :: setMainFileContent, findImportantJavaFiles
 
     character(:), allocatable, dimension(:) :: javaImports
     character(:), allocatable, dimension(:) :: javaPackages
