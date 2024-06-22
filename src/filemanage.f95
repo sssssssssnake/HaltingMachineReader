@@ -73,6 +73,19 @@ module fileManager
         end if
     end subroutine printFileStatus
 
+    function containsString(keyword, searchString) result(isInString)
+        character(:), allocatable, intent(in) :: keyword
+        character(:), allocatable, intent(in) :: searchString
+        logical :: isInString
+        ! default value is false
+        isInString = .false.
+
+        if ( index(searchString, keyword) > 0 ) then
+            isInString = .true.
+        end if
+    
+    end function containsString
+
 
 
 end module fileManager
