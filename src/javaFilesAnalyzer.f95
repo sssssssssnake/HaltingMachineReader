@@ -20,7 +20,7 @@ module JavaFilesAnalyzer
     !! It looks for the number of imports and the package name.
     subroutine findImportantJavaFiles(lastLine)
         integer, intent(in) :: lastLine
-        integer :: i
+        integer :: i, keyPathsCounter
         integer :: nubmerOfImports, packageLine, packageLineTrue
         logical :: hasImport, hasPackage
         character(:), allocatable :: keyword, packageKeyword
@@ -28,6 +28,7 @@ module JavaFilesAnalyzer
         character(:), allocatable :: keyPaths(:)
 
         nubmerOfImports = 0
+        keyPathsCounter = 1
         keyword = "import"
         packageKeyword = "package"
 
@@ -45,7 +46,7 @@ module JavaFilesAnalyzer
         lookForPackages: do i = 1, lastLine
             lineContent = mainFileContent(i)
             if ( containsString(packageKeyword, lineContent) ) then
-                javaPackages = lineContent
+                javaPackages(1) = lineContent
                 packageLine = i
                 hasPackage = .true.
                 exit lookForPackages
@@ -57,7 +58,20 @@ module JavaFilesAnalyzer
         end if
 
         ! now to look at the important filePaths
-        allocate(character(100) :: keyPaths(nubmerOfImports + packageLineTrue))
+        allocate(character(256) :: keyPaths(nubmerOfImports + packageLineTrue))
+
+        do i = 1, lastLine
+            lineContent = mainFileContent(i)
+            hasImport = containsString(keyword, lineContent)
+            if ( hasImport ) then
+                keyPaths(keyPathsCounter) = lineContent
+                keyPathsCounter = keyPathsCounter + 1
+            end if
+        end do
+
+        if ( packageLineTrue .eq. 1 ) then
+            keyPaths(keyPathsCounter + 1) = javaPackages(1)
+        end if
 
 
 
