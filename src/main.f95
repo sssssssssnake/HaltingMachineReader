@@ -2,7 +2,7 @@
 
 program HelloWorld
     use fileManager, only: readFile
-    use JavaFilesAnalyzer, only: findImportantJavaFiles
+    use JavaFilesAnalyzer, only: findImportantJavaFiles, setMainFileContent
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
@@ -15,6 +15,7 @@ program HelloWorld
     myFilePath = "javacode/Main.java"
 
     call readFile(myFilePath, myFileContents, endingLine)
+    call setMainFileContent(myFileContents)
     call findImportantJavaFiles(endingLine)
 
 

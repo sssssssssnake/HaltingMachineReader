@@ -1,5 +1,4 @@
 module fileManager
-    use JavaFilesAnalyzer, only : setMainFileContent
     implicit none
     
     private
@@ -55,7 +54,6 @@ module fileManager
 
         reusableFilePath = filePath
         mainFileContent = fileContents
-        call setMainFileContent(mainFileContent)
 
         print *, "Read file: ", reusableFilePath
 
