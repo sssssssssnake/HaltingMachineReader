@@ -45,6 +45,7 @@ module fileManager
         reusableFilePath = filePath
         mainFileContent = fileContents
         call setMainFileContent(mainFileContent)
+        print *, "location of (fileContents)", loc(fileContents)
         deallocate(fileContents)
 
 

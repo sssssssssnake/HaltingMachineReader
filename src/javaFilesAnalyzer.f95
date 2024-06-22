@@ -25,9 +25,10 @@ module JavaFilesAnalyzer
     subroutine printMainFileContent(endLine)
         integer, intent(in) :: endLine
         integer :: i
-        do i = 1, endLine
-            print *, trim(mainFileContent(i))
-        end do
+        ! do i = 1, endLine
+        !     print *, trim(mainFileContent(i))
+        ! end do
+        print *, "location of main filecontents: ", loc(mainFileContent)
     end subroutine printMainFileContent
 
     
