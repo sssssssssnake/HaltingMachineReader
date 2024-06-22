@@ -56,7 +56,6 @@ module fileManager
         reusableFilePath = filePath
         mainFileContent = fileContents
         call setMainFileContent(mainFileContent)
-        deallocate(fileContents)
 
         print *, "Read file: ", reusableFilePath
 

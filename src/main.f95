@@ -16,5 +16,6 @@ program HelloWorld
 
     call readFile(myFilePath, myFileContents, endingLine)
 
+    deallocate(myFileContents)
     deallocate(myFilePath)
 end program HelloWorld
