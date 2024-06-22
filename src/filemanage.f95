@@ -80,10 +80,9 @@ module fileManager
     !! @param searchString The string to be checked.
     !!
     !! @return true if the keyword is in the string, false otherwise.
-    function containsString(keyword, searchString) result(isInString)
+    logical function containsString(keyword, searchString) result(isInString)
         character(:), allocatable, intent(in) :: keyword
         character(:), allocatable, intent(in) :: searchString
-        logical :: isInString
         ! default value is false
         isInString = .false.
 
