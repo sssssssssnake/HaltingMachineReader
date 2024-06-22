@@ -29,8 +29,8 @@ module JavaFilesAnalyzer
 
         nubmerOfImports = 0
         keyPathsCounter = 1
-        keyword = "import"
-        packageKeyword = "package"
+        keyword = "import "
+        packageKeyword = "package "
         hasPackage = .false.
 
         
@@ -47,11 +47,8 @@ module JavaFilesAnalyzer
         lookForPackages: do i = 1, lastLine
             lineContent = mainFileContent(i)
             if ( containsString(packageKeyword, lineContent) ) then
-                print *, "found package line:"
-                print *, "lineContent: ", trim(lineContent), " i = ", i
                 allocate(character(256) :: javaPackages(1))
                 javaPackages(1) = lineContent
-                print *, "javaPackages(1): ", javaPackages(1)
                 packageLine = i
                 hasPackage = .true.
                 exit lookForPackages
@@ -71,7 +68,6 @@ module JavaFilesAnalyzer
             lineContent = mainFileContent(i)
             hasImport = containsString(keyword, lineContent)
             if ( hasImport ) then
-                print *, "lineContent: ", trim(lineContent), " i = ", i, " keyPathsCounter = ", keyPathsCounter
                 keyPaths(keyPathsCounter) = lineContent
                 keyPathsCounter = keyPathsCounter + 1
             end if
@@ -79,11 +75,8 @@ module JavaFilesAnalyzer
 
         if ( packageLineTrue .eq. 1 ) then
             keyPaths(keyPathsCounter) = javaPackages(1)
-            print *, "packageLine: ", javaPackages(1), " keyPathsCounter = ", keyPathsCounter
         end if
 
-        print *, "number of keyPaths: ", keyPathsCounter
-        print *, "location of keyPaths: ", loc(keyPaths)
         print *, "Length of keyPaths: ", size(keyPaths)
 
         do i = 1, size(keyPaths)
@@ -91,8 +84,6 @@ module JavaFilesAnalyzer
         end do
 
 
-        print *, "number of imports: ", nubmerOfImports
-        print *, "location of javaPackages: ", packageLine
 
     end subroutine findImportantJavaFiles
 
