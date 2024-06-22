@@ -16,7 +16,9 @@ build: clean
 clean:
 	@# if the file exists, remove it
 	@ echo "Cleaning up..."
-	@if [ -f *.mod ]; then rm *.mod; fi
+	@if [ -f filemanager.mod ]; then rm -f filemanager.mod; fi
 	@if [ -f program ]; then rm program; fi
-	@if [ -f *.o ]; then rm *.o; fi
-	@if [ -f *.10 ]; then rm *.10; fi
+	@if [ -f filemanage.o ]; then rm filemanage.o; fi
+	@if [ -f javaFilesAnalyzer.o ]; then rm javaFilesAnalyzer.o; fi
+	@if [ -f javafilesanalyzer.mod ]; then rm -f javafilesanalyzer.mod; fi
+	@if [ -f file10 ]; then rm file10; fi
