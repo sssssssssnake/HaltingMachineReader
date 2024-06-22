@@ -1,9 +1,9 @@
 module JavaFilesAnalyzer
-    use fileManager, only: containsString
+    use fileManager, only: containsString, getTextBetweenStrings
     implicit none
     
     private
-    public :: setMainFileContent, findImportantJavaFiles, printMainFileContent
+    public :: setMainFileContent, findImportantJavaFiles
 
     character(:), allocatable :: sourceDirectory
     character(:), allocatable, dimension(:) :: javaImports
@@ -131,6 +131,11 @@ module JavaFilesAnalyzer
         end do
         print *, "location of main filecontents: ", loc(mainFileContent)
     end subroutine printMainFileContent
+
+    subroutine setSourceDirectory(directory)
+        character(:), allocatable, intent(in) :: directory
+        sourceDirectory = directory
+    end subroutine setSourceDirectory
 
     
 

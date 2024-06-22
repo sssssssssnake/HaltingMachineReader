@@ -2,7 +2,7 @@ module fileManager
     implicit none
     
     private
-    public :: readFile, containsString
+    public :: readFile, containsString, getTextBetweenStrings
 
 
     character(:), allocatable :: reusableFilePath
@@ -28,7 +28,6 @@ module fileManager
         integer, intent(out) :: endingLine
 
         integer :: counter, fileSize, fileUnit, iostat
-        character(:),dimension(:), allocatable, target :: filecontTest
 
 
         fileUnit = 10
@@ -88,6 +87,21 @@ module fileManager
 
     
     end function containsString
+
+    function getTextBetweenStrings(lineToAnalyze, startString, endString) result(textBetweenStrings)
+        character(:), allocatable, intent(in) :: lineToAnalyze
+        character(:), allocatable, intent(in) :: startString
+        character(:), allocatable, intent(in) :: endString
+        character(:), allocatable :: textBetweenStrings
+
+        integer :: startStringIndex, endStringIndex
+
+        startStringIndex = index(lineToAnalyze, startString) + len(startString)
+        endStringIndex = index(lineToAnalyze, endString) - 1
+
+        textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
+
+    end function getTextBetweenStrings
 
 
 
