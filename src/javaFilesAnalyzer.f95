@@ -31,6 +31,7 @@ module JavaFilesAnalyzer
         keyPathsCounter = 1
         keyword = "import"
         packageKeyword = "package"
+        hasPackage = .false.
 
         
         do i = 1, lastLine
@@ -46,6 +47,8 @@ module JavaFilesAnalyzer
         lookForPackages: do i = 1, lastLine
             lineContent = mainFileContent(i)
             if ( containsString(packageKeyword, lineContent) ) then
+                print *, "found package line:"
+                print *, "lineContent: ", trim(lineContent), " i = ", i
                 javaPackages(1) = lineContent
                 packageLine = i
                 hasPackage = .true.
@@ -57,6 +60,8 @@ module JavaFilesAnalyzer
             packageLineTrue = 1
         end if
 
+        print *, "number of imports: ", nubmerOfImports
+        print *, "hasPackage: ", packageLineTrue
         ! now to look at the important filePaths
         allocate(character(256) :: keyPaths(nubmerOfImports + packageLineTrue))
 
@@ -64,22 +69,24 @@ module JavaFilesAnalyzer
             lineContent = mainFileContent(i)
             hasImport = containsString(keyword, lineContent)
             if ( hasImport ) then
+                print *, "lineContent: ", trim(lineContent), " i = ", i, " keyPathsCounter = ", keyPathsCounter
                 keyPaths(keyPathsCounter) = lineContent
                 keyPathsCounter = keyPathsCounter + 1
             end if
         end do
 
         if ( packageLineTrue .eq. 1 ) then
-            keyPaths(keyPathsCounter + 1) = javaPackages(1)
+            keyPaths(keyPathsCounter) = javaPackages(1)
+            print *, "packageLine: ", javaPackages(1), " keyPathsCounter = ", keyPathsCounter
         end if
 
         print *, "number of keyPaths: ", keyPathsCounter
         print *, "location of keyPaths: ", loc(keyPaths)
         print *, "Length of keyPaths: ", size(keyPaths)
 
-        ! do i = 1, size(keyPaths)
-        !     print *, trim(keyPaths(i))
-        ! end do
+        do i = 1, size(keyPaths)
+            print *, keyPaths(i)
+        end do
 
 
         print *, "number of imports: ", nubmerOfImports
