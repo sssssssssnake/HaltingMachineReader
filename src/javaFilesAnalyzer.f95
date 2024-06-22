@@ -13,6 +13,8 @@ module JavaFilesAnalyzer
     
     contains
 
+    !> Finds the important java files.
+    !! @param lastLine The last line of the main file.
     subroutine findImportantJavaFiles(lastLine)
         integer, intent(in) :: lastLine
         integer :: i
