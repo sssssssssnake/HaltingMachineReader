@@ -58,7 +58,7 @@ module javaAnalysisTypes
         print *, "Package Name: ", this%packageName
         print *, "Imports: "
         do i = 1, size(this%imports)
-            print *, trim(this%imports(i))
+            print *, trim(this%importObjects(i)%importPath)
         end do
     end subroutine printJavaFile
 
