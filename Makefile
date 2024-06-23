@@ -30,3 +30,9 @@ clean:
 runkeep: build
 	@echo "Running the program..."
 	@./program
+
+debug: build
+	@echo "Running the program in debug mode..."
+	@gdb ./program
+	@#clean
+	@$(MAKE) clean
