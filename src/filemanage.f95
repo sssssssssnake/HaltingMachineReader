@@ -129,6 +129,18 @@ module fileManager
         end do
     end function replaceCharacterInString
 
+    logical function fileExisits(filePath) result(exists)
+        character(:), allocatable, intent(in) :: filePath
+        integer :: fileUnit, iostat
+
+        exists = .false.
+        fileUnit = 14
+
+        open(newunit=fileUnit, file=filePath, status='old', action='read', iostat=iostat)
+        inquire(fileUnit, exist=exists)
+        close(fileUnit)
+
+    end function fileExisits
 
 
 
