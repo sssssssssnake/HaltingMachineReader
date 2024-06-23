@@ -43,7 +43,7 @@ module fileManager
         counter = 1
         do counter = 1, 100
             read(fileUnit, '(A)', iostat=iostat) fileContents(counter)
-            if ( iostat /= 0 ) then
+            if ( iostat .ne. 0 ) then
                 endingLine = counter - 1
                 exit
             end if
@@ -107,7 +107,7 @@ module fileManager
         endStringIndex = index(lineToAnalyze, trim(endString), back=.true.) - 1
 
         textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
-        
+
     end function getTextBetweenStrings
 
     function replaceCharacterInString(lineToReplace, characterToReplace, replacementCharacter) result(replacedLine)
@@ -121,7 +121,7 @@ module fileManager
         allocate(character(len(lineToReplace)) :: replacedLine)
 
         do i = 1, len(lineToReplace)
-            if ( lineToReplace(i:i) == characterToReplace ) then
+            if ( lineToReplace(i:i) .eq. characterToReplace ) then
                 replacedLine(i:i) = replacementCharacter
             else
                 replacedLine(i:i) = lineToReplace(i:i)
