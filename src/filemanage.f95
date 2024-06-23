@@ -97,14 +97,18 @@ module fileManager
     !! @return the text between the two strings.
     function getTextBetweenStrings(lineToAnalyze, startString, endString) result(textBetweenStrings)
         character(:), allocatable, intent(in) :: lineToAnalyze
-        character(256), intent(in) :: startString
-        character(256), intent(in) :: endString
+        character(:), allocatable, intent(in) :: startString
+        character(:), allocatable, intent(in) :: endString
         character(:), allocatable :: textBetweenStrings
 
         integer :: startStringIndex, endStringIndex
+        print *, "lineToAnalyze: ", lineToAnalyze
+        print *, "Length of startString: ", len(trim(startString))
 
-        startStringIndex = index(lineToAnalyze, startString) + len(startString)
-        endStringIndex = index(lineToAnalyze, endString) - 1
+        startStringIndex = index(lineToAnalyze, trim(startString)) + len(trim(startString))
+        print *, "startStringIndex: ", startStringIndex
+        endStringIndex = index(lineToAnalyze, trim(endString), back=.true.) - 1
+        print *, "endStringIndex: ", endStringIndex
 
         textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
     end function getTextBetweenStrings

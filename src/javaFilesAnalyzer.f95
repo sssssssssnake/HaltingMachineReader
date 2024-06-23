@@ -32,6 +32,7 @@ module JavaFilesAnalyzer
         character(:), allocatable :: lineContent
         character(:), allocatable :: keyPaths(:)
         character(:), allocatable :: javaPackageParsed, semiColon, packageContent, mainClassName
+        character(:), allocatable :: parseFilePathKeyword1, parseFilePathKeyword2
 
         numberOfImports = 0
         keyPathsCounter = 1
@@ -39,6 +40,8 @@ module JavaFilesAnalyzer
         packageKeyword = "package "
         semiColon = ";"
         hasPackage = .false.
+        parseFilePathKeyword1 = "/"
+        parseFilePathKeyword2 = "."
 
         
         do i = 1, lastLine
@@ -101,7 +104,7 @@ module JavaFilesAnalyzer
             javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
             javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
             allocate(character(256) :: mainClassName)
-            mainClassName = getTextBetweenStrings(sourceDirectory, "/", ".")
+            mainClassName = getTextBetweenStrings(sourceDirectory, parseFilePathKeyword1, parseFilePathKeyword2)
             ! use the initializeJavaFile from the JavaFile module
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName, javaPackageParsed, javaImports)
             print *, "Printing the mainFile"
