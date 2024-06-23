@@ -1,5 +1,5 @@
 module javaAnalysisTypes
-    use fileManager, only: replaceCharacterInString, getTextBetweenStrings
+    use fileManager, only: replaceCharacterInString, getTextBetweenStrings, RemoveSpaces
     implicit none
     
 
@@ -58,7 +58,7 @@ module javaAnalysisTypes
         print *, "Package Name: ", this%packageName
         print *, "Imports: "
         do i = 1, size(this%imports)
-            print *, trim(this%importObjects(i)%importPath)
+            print *, "'", trim(this%importObjects(i)%importPath), "'"
         end do
     end subroutine printJavaFile
 
