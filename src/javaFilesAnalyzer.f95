@@ -26,14 +26,14 @@ module JavaFilesAnalyzer
     subroutine findImportantJavaFiles(lastLine)
         integer, intent(in) :: lastLine
         integer :: i, keyPathsCounter
-        integer :: nubmerOfImports, packageLine, packageLineTrue
+        integer :: numberOfImports, packageLine, packageLineTrue
         logical :: hasImport, hasPackage
         character(:), allocatable :: keyword, packageKeyword
         character(:), allocatable :: lineContent
         character(:), allocatable :: keyPaths(:)
         character(:), allocatable :: javaPackageParsed, semiColon, packageContent
 
-        nubmerOfImports = 0
+        numberOfImports = 0
         keyPathsCounter = 1
         keyword = "import "
         packageKeyword = "package "
@@ -46,7 +46,7 @@ module JavaFilesAnalyzer
             ! use the containsString function from the fileManager module
             hasImport = containsString(keyword, lineContent)
             if ( hasImport ) then
-                nubmerOfImports = nubmerOfImports + 1
+                numberOfImports = numberOfImports + 1
             end if
         end do
 
@@ -66,10 +66,10 @@ module JavaFilesAnalyzer
             packageLineTrue = 1
         end if
 
-        print *, "number of imports: ", nubmerOfImports
+        print *, "number of imports: ", numberOfImports
         print *, "hasPackage: ", packageLineTrue
         ! now to look at the important filePaths
-        allocate(character(256) :: keyPaths(nubmerOfImports + packageLineTrue))
+        allocate(character(256) :: keyPaths(numberOfImports + packageLineTrue))
 
         do i = 1, lastLine
             lineContent = mainFileContent(i)
@@ -92,8 +92,8 @@ module JavaFilesAnalyzer
 
 
         if ( hasPackage ) then
-            allocate(character(256) :: javaImports(nubmerOfImports))
-            do i= 1, nubmerOfImports
+            allocate(character(256) :: javaImports(numberOfImports))
+            do i= 1, numberOfImports
                 javaImports(i) = keyPaths(i)
             end do
         end if
@@ -114,8 +114,7 @@ module JavaFilesAnalyzer
         javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
         javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
 
-        allocate(mainFile)
-        
+        ! mainFile%intializeJavaFile(javaImports, javaPackages, javaPackageParsed, sourceDirectory)
 
 
 
