@@ -6,12 +6,13 @@ program HelloWorld
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
+    character(:), allocatable :: testParse
     integer :: endingLine
 
     
 
+    myFilePath = "javacode/Main.java"
     
-
     ! Read the file
     call readFile(myFilePath, myFileContents, endingLine)
 
