@@ -2,7 +2,7 @@ module fileManager
     implicit none
     
     private
-    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString, RemoveSpaces
+    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString
 
 
     character(:), allocatable :: reusableFilePath
@@ -129,26 +129,6 @@ module fileManager
         end do
     end function replaceCharacterInString
 
-    subroutine RemoveSpaces(inputString, outputString)
-        implicit none
-        character(len=*), intent(in) :: inputString
-        character(len=200) :: outputString
-        integer :: i, stringLen
-      
-        stringLen = len(inputString)
-        outputString = inputString
-      
-        ! Remove trailing spaces
-        outputString = trim(outputString)
-      
-        ! Remove leading spaces
-        do i = 1, stringLen
-          if (outputString(i:i) /= ' ') exit
-          outputString(i:i) = outputString(i+1:i+1)
-          outputString(i+1:i+1) = ' '
-        end do
-
-    end subroutine RemoveSpaces
 
 
 

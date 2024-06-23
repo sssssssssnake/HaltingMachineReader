@@ -1,5 +1,5 @@
 module javaAnalysisTypes
-    use fileManager, only: replaceCharacterInString, getTextBetweenStrings, RemoveSpaces
+    use fileManager, only: replaceCharacterInString, getTextBetweenStrings
     implicit none
     
 
