@@ -2,7 +2,7 @@ module fileManager
     implicit none
     
     private
-    public :: readFile, containsString, getTextBetweenStrings
+    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString
 
 
     character(:), allocatable :: reusableFilePath

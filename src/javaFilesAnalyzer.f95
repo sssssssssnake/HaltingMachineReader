@@ -1,5 +1,6 @@
 module JavaFilesAnalyzer
-    use fileManager, only: containsString, getTextBetweenStrings
+    use fileManager, only: containsString, getTextBetweenStrings, replaceCharacterInString
+    use javaAnalysisTypes, only: JavaFile
     implicit none
     
     private
@@ -10,14 +11,10 @@ module JavaFilesAnalyzer
     character(:), allocatable, dimension(:) :: javaPackages
 
     character(:), dimension(:), allocatable :: mainFileContent
-
-    type :: JavaFile
-        character(:), allocatable :: relativeFilePath
-        character(:), allocatable :: className
-        character(:), allocatable :: packageName
-        character(:), allocatable, dimension(:) :: imports
-    end type JavaFile
-
+    
+    
+    
+    type(JavaFile), allocatable :: mainFile
     
     contains
 
@@ -115,7 +112,9 @@ module JavaFilesAnalyzer
         packageContent = javaPackages(1)
         packageKeyword = "package "
         javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
-        print *, "parsed package: '", javaPackageParsed, "'"
+        javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
+
+
 
 
 
