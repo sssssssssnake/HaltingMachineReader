@@ -11,6 +11,7 @@ module javaAnalysisTypes
 
         contains
         procedure :: initializeJavaFile
+        procedure :: printJavaFile
     end type JavaFile
 
     contains 
@@ -27,6 +28,18 @@ module javaAnalysisTypes
         this%packageName = packageName
         this%imports = imports
     end subroutine initializeJavaFile
+
+    subroutine printJavaFile(this)
+        class(JavaFile), intent(in) :: this
+
+        print *, "JavaFile: ", this%relativeFilePath
+        print *, "Class Name: ", this%className
+        print *, "Package Name: ", this%packageName
+        print *, "Imports: "
+        do i = 1, size(this%imports)
+            print *, trim(this%imports(i))
+        end do
+    end subroutine printJavaFile
 
     
 

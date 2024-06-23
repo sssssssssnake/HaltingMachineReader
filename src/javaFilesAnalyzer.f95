@@ -102,6 +102,8 @@ module JavaFilesAnalyzer
             javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
             ! use the initializeJavaFile from the JavaFile module
             call mainFile%initializeJavaFile(sourceDirectory, javaPackageParsed, javaPackageParsed, javaImports)
+            print *, "Printing the mainFile"
+            call mainFile%printJavaFile
         end if
 
         ! print the imports and paths for debugging
