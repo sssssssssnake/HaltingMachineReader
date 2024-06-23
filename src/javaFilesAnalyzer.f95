@@ -107,6 +107,7 @@ module JavaFilesAnalyzer
             mainClassName = getTextBetweenStrings(sourceDirectory, parseFilePathKeyword1, parseFilePathKeyword2)
             ! use the initializeJavaFile from the JavaFile module
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName, javaPackageParsed, javaImports)
+            call mainFile%convertImportsToPaths
             print *, "Printing the mainFile"
             call mainFile%printJavaFile
         end if
