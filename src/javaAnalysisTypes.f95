@@ -86,10 +86,10 @@ module javaAnalysisTypes
             this%importObjects(i)%originalImportText = workingImport
             this%importObjects(i)%isWildcard = index(workingImport, "*") .gt. 0
             if (this%importObjects(i)%isWildcard) then
-                this%importObjects(i)%importPath = replaceCharacterInString(workingImport, ".", "/")
+                this%importObjects(i)%importPath = trim(adjustl(replaceCharacterInString(workingImport, ".", "/")))
                 this%importObjects(i)%importName = ""
             else
-                this%importObjects(i)%importPath = replaceCharacterInString(workingImport, ".", "/") // ".java"
+                this%importObjects(i)%importPath = trim(adjustl(replaceCharacterInString(workingImport, ".", "/"))) // ".java"
                 this%importObjects(i)%importName = getTextBetweenStrings(workingImport, javaDotKeyword1, javaDotKeyword2)
             end if
         end do
