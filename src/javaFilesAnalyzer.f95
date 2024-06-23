@@ -111,16 +111,7 @@ module JavaFilesAnalyzer
             call mainFile%printJavaFile
         end if
 
-        ! print the imports and paths for debugging
-        print *, "Length of javaImports: ", size(javaImports)
-        do i = 1, size(javaImports)
-            print *, trim(javaImports(i))
-        end do
-
-        print *, "Length of javaPackages: ", size(javaPackages)
-        do i = 1, size(javaPackages)
-            print *, trim(javaPackages(i))
-        end do
+        
 
         ! deallocate everything the subroutine has allocated
         deallocate(keyword)
