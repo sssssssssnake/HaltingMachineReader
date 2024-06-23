@@ -102,15 +102,12 @@ module fileManager
         character(:), allocatable :: textBetweenStrings
 
         integer :: startStringIndex, endStringIndex
-        print *, "lineToAnalyze: ", lineToAnalyze
-        print *, "Length of startString: ", len(trim(startString))
 
         startStringIndex = index(lineToAnalyze, trim(startString)) + len(trim(startString))
-        print *, "startStringIndex: ", startStringIndex
         endStringIndex = index(lineToAnalyze, trim(endString), back=.true.) - 1
-        print *, "endStringIndex: ", endStringIndex
 
         textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
+        
     end function getTextBetweenStrings
 
     function replaceCharacterInString(lineToReplace, characterToReplace, replacementCharacter) result(replacedLine)

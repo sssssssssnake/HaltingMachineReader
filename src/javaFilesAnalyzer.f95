@@ -130,6 +130,8 @@ module JavaFilesAnalyzer
         deallocate(javaPackageParsed)
         deallocate(semiColon)
         deallocate(packageContent)
+        deallocate(parseFilePathKeyword1)
+        deallocate(parseFilePathKeyword2)
 
     end subroutine findImportantJavaFiles
 
