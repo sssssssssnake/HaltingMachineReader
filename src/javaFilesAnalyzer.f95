@@ -115,7 +115,14 @@ module JavaFilesAnalyzer
             print *, trim(javaPackages(i))
         end do
 
-
+        ! deallocate everything the subroutine has allocated
+        deallocate(keyword)
+        deallocate(packageKeyword)
+        deallocate(lineContent)
+        deallocate(keyPaths)
+        deallocate(javaPackageParsed)
+        deallocate(semiColon)
+        deallocate(packageContent)
 
     end subroutine findImportantJavaFiles
 
