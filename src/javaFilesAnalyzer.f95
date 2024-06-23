@@ -114,6 +114,9 @@ module JavaFilesAnalyzer
         javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
         javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
 
+        allocate(mainFile)
+        
+
 
 
 
