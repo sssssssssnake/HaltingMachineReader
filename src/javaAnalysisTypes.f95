@@ -8,14 +8,14 @@ module javaAnalysisTypes
         character(:), allocatable :: className
         character(:), allocatable :: packageName
         character(:), allocatable, dimension(:) :: imports
-        
+
         contains
-        procedure :: intializeJavaFile
+        procedure :: initializeJavaFile
     end type JavaFile
 
     contains 
 
-    subroutine intializeJavaFile(this, relativeFilePath, className, packageName, imports)
+    subroutine initializeJavaFile(this, relativeFilePath, className, packageName, imports)
         class(JavaFile), intent(inout) :: this
         character(:), allocatable, intent(in) :: relativeFilePath
         character(:), allocatable, intent(in) :: className
@@ -26,7 +26,7 @@ module javaAnalysisTypes
         this%className = className
         this%packageName = packageName
         this%imports = imports
-    end subroutine intializeJavaFile
+    end subroutine initializeJavaFile
 
     
 

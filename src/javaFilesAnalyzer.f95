@@ -14,7 +14,7 @@ module JavaFilesAnalyzer
     
     
     
-    type(JavaFile), allocatable :: mainFile
+    type(JavaFile) :: mainFile
     
     contains
 
@@ -96,6 +96,12 @@ module JavaFilesAnalyzer
             do i= 1, numberOfImports
                 javaImports(i) = keyPaths(i)
             end do
+            packageContent = javaPackages(1)
+            packageKeyword = "package "
+            javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
+            javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
+            ! use the initializeJavaFile from the JavaFile module
+            call mainFile%initializeJavaFile(sourceDirectory, javaPackageParsed, javaPackageParsed, javaImports)
         end if
 
         ! print the imports and paths for debugging
@@ -108,15 +114,6 @@ module JavaFilesAnalyzer
         do i = 1, size(javaPackages)
             print *, trim(javaPackages(i))
         end do
-
-        packageContent = javaPackages(1)
-        packageKeyword = "package "
-        javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
-        javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
-
-        ! mainFile%intializeJavaFile(javaImports, javaPackages, javaPackageParsed, sourceDirectory)
-
-
 
 
 
@@ -143,7 +140,5 @@ module JavaFilesAnalyzer
         sourceDirectory = directory
     end subroutine setSourceDirectory
 
-    
-
-    
+     
 end module JavaFilesAnalyzer
