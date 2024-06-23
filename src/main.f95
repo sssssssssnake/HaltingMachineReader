@@ -13,8 +13,6 @@ program HelloWorld
 
     myFilePath = "javacode/Main.java"
 
-    testParse = replaceCharacterInString(myFilePath, "/", ".")
-    print *, testParse
     
     ! Read the file
     call readFile(myFilePath, myFileContents, endingLine)
