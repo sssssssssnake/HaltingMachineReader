@@ -10,6 +10,7 @@ module javaAnalysisTypes
         character(:), allocatable :: className
         character(:), allocatable :: packageName
         character(:), allocatable, dimension(:) :: imports
+        type(Import), allocatable, dimension(:) :: importObjects
         
 
         contains
@@ -17,6 +18,15 @@ module javaAnalysisTypes
         procedure :: printJavaFile
         procedure :: convertImportsToPaths
     end type JavaFile
+
+    type :: Import
+        character(:), allocatable :: originalImportText
+        logical :: isStatic
+        logical :: isWildcard
+        character(:), allocatable :: importPath
+        character(:), allocatable :: importName
+
+    end type Import
 
     contains 
 
@@ -52,25 +62,39 @@ module javaAnalysisTypes
         end do
     end subroutine printJavaFile
 
+
+    !> Converts the imports to paths and names
+    !! @param this The JavaFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
     subroutine convertImportsToPaths(this)
         class(JavaFile), intent(inout) :: this
         character(:), allocatable :: workingImport
         character(:), allocatable :: keyword1, keyword2
+        character(:), allocatable :: javaDotKeyword1, javaDotKeyword2
         integer :: i
         i = 1
         keyword1 = "import "
         keyword2 = ";"
+        javaDotKeyword1 = "."
+        javaDotKeyword2 = ";"
 
-        ! workingImport = this%imports(i)
-        ! workingImport = getTextBetweenStrings(workingImport, keyword1, keyword2)
-
-        ! print *, "Working Import: ", workingImport
-        ! print *, "Working Import: ", replaceCharacterInString(workingImport, ".", "/") // ".java"
+        print *, "Converting imports to paths"
+        allocate(this%importObjects(size(this%imports)))
 
         do i = 1, size(this%imports)
             workingImport = this%imports(i)
             workingImport = getTextBetweenStrings(workingImport, keyword1, keyword2)
-            this%imports(i) = replaceCharacterInString(workingImport, ".", "/") // ".java"
+            print *, "Working Import: ", loc(this%imports(i))
+            print *, "does importObject exist? ", loc(this%importObjects(i))
+            this%importObjects(i)%originalImportText = workingImport
+            print *, "Original Import: ", this%importObjects(i)%originalImportText
+            this%importObjects(i)%isWildcard = index(workingImport, "*") .gt. 0
+            if (this%importObjects(i)%isWildcard) then
+                this%importObjects(i)%importPath = replaceCharacterInString(workingImport, ".", "/")
+                this%importObjects(i)%importName = ""
+            else
+                this%importObjects(i)%importPath = replaceCharacterInString(workingImport, ".", "/") // ".java"
+                this%importObjects(i)%importName = getTextBetweenStrings(workingImport, javaDotKeyword1, javaDotKeyword2)
+            end if
         end do
 
     end subroutine convertImportsToPaths

@@ -12,7 +12,7 @@ build: clean
 	@gfortran -c src/javaAnalysisTypes.f95
 	@gfortran -c src/filemanage.f95
 	@gfortran -c src/javaFilesAnalyzer.f95
-	@gfortran -o program src/main.f95 filemanage.o javaFilesAnalyzer.o javaAnalysisTypes.o
+	@gfortran -o program src/main.f95 filemanage.o javaFilesAnalyzer.o javaAnalysisTypes.o -g
 
 clean:
 	@# if the file exists, remove it
