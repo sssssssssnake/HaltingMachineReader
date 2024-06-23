@@ -1,7 +1,7 @@
 
 
 program HelloWorld
-    use fileManager, only: readFile, getTextBetweenStrings
+    use fileManager, only: readFile, replaceCharacterInString
     use JavaFilesAnalyzer, only: findImportantJavaFiles, setMainFileContent, setSourceDirectory
     implicit none
     character(:), allocatable :: myFilePath
@@ -12,6 +12,9 @@ program HelloWorld
     
 
     myFilePath = "javacode/Main.java"
+
+    testParse = replaceCharacterInString(myFilePath, "/", ".")
+    print *, testParse
     
     ! Read the file
     call readFile(myFilePath, myFileContents, endingLine)
