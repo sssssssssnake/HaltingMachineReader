@@ -4,12 +4,12 @@ module javaAnalysisTypes
     private
     public :: JavaFile
     type :: JavaFile
-    character(:), allocatable :: relativeFilePath
-    character(:), allocatable :: className
-    character(:), allocatable :: packageName
-    character(:), allocatable, dimension(:) :: imports
-
-    contains
+        character(:), allocatable :: relativeFilePath
+        character(:), allocatable :: className
+        character(:), allocatable :: packageName
+        character(:), allocatable, dimension(:) :: imports
+        
+        contains
         procedure :: intializeJavaFile
     end type JavaFile
 
