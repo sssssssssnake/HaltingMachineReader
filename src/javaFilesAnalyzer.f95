@@ -97,7 +97,7 @@ module JavaFilesAnalyzer
             packageContent = javaPackages(1)
             packageKeyword = "package "
             javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
-            javaPackageParsed = replaceCharacterInString(javaPackageParsed, ".", "/")
+            javaPackageParsed = trim(adjustl(replaceCharacterInString(javaPackageParsed, ".", "/")))
             allocate(character(256) :: mainClassName)
             mainClassName = getTextBetweenStrings(sourceDirectory, parseFilePathKeyword1, parseFilePathKeyword2)
             ! use the initializeJavaFile from the JavaFile module
