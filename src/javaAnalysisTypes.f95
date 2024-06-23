@@ -83,10 +83,7 @@ module javaAnalysisTypes
         do i = 1, size(this%imports)
             workingImport = this%imports(i)
             workingImport = getTextBetweenStrings(workingImport, keyword1, keyword2)
-            print *, "Working Import: ", loc(this%imports(i))
-            print *, "does importObject exist? ", loc(this%importObjects(i))
             this%importObjects(i)%originalImportText = workingImport
-            print *, "Original Import: ", this%importObjects(i)%originalImportText
             this%importObjects(i)%isWildcard = index(workingImport, "*") .gt. 0
             if (this%importObjects(i)%isWildcard) then
                 this%importObjects(i)%importPath = replaceCharacterInString(workingImport, ".", "/")

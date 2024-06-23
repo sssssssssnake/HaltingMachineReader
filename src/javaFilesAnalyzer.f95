@@ -87,11 +87,6 @@ module JavaFilesAnalyzer
             keyPaths(keyPathsCounter) = javaPackages(1)
         end if
 
-        print *, "Length of keyPaths: ", size(keyPaths)
-
-        do i = 1, size(keyPaths)
-            print *, trim(keyPaths(i))
-        end do
 
 
         if ( hasPackage ) then
