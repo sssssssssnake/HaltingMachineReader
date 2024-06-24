@@ -271,6 +271,7 @@ module fileManager
         ! if the line contains a closing curly bracket, then decrement the bracketLayersDeep
 
         goThroughFile: do i = 1, lastLine
+            workingLine = fileContents(i)
             
             if ( index(workingLine, "{") .gt. 0 ) then
                 bracketLayersDeep = bracketLayersDeep + 1
@@ -282,21 +283,20 @@ module fileManager
             end if
             deallocate(workingLine)
 
-            workingLine = fileContents(i)
-            if ( index(workingLine, ";") .gt. 0 ) then
-                if (index(workingLine, ";") .eq. len(trim(workingLine)) ) then
-                    ! if the semicolon is the last character in the line, then move to the next line
-                    ! unless there is a previous line that is unresolved
-                    cycle goThroughFile
-                else
-                    ! if the semicolon is not the last character in the line,
-                    ! then the line needs to be reformatted
+            ! if ( index(workingLine, ";") .gt. 0 ) then
+            !     if (index(workingLine, ";") .eq. len(trim(workingLine)) ) then
+            !         ! if the semicolon is the last character in the line, then move to the next line
+            !         ! unless there is a previous line that is unresolved
+            !         cycle goThroughFile
+            !     else
+            !         ! if the semicolon is not the last character in the line,
+            !         ! then the line needs to be reformatted
+            !         needsReformatting(bracketLayersDeep) = .true.
+            !     end if
+            ! else
+            !     ! if the line does not contain a semicolon, then it needs to be resolved
 
-                end if
-            else
-                ! if the line does not contain a semicolon, then it needs to be resolved
-
-            end if
+            ! end if
         end do goThroughFile
 
         deallocate(workingLine)
