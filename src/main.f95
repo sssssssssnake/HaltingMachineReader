@@ -11,7 +11,7 @@ program HelloWorld
 
     
 
-    myFilePath = "FunTest.java"
+    myFilePath = "javacode/coolpackage/OrganizedChaos.java"
 
     
     ! Read the file
@@ -24,10 +24,13 @@ program HelloWorld
 
     ! Test the file
     if (mainFile%packageName .eq. "") then
+        print *, "The package name is empty. ", mainFile%className
         testParse = mainFile%className // ".java"
     else if (allocated(mainFile%className)) then
+        print *, "The package name is not empty. ", mainFile%packageName
         testParse = mainFile%packageName // "/" // mainFile%className // ".java"
     end if
+    print *, "The classname is: ", mainFile%className
 
     print *, testParse
     if (testParse .ne. myFilePath) then

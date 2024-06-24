@@ -2,7 +2,8 @@ module fileManager
     implicit none
     
     private
-    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString, removeSubstring
+    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString,&
+     removeSubstring, getFilenameFromPathNoExtention, fileExisits
 
 
     character(:), allocatable :: reusableFilePath
@@ -109,6 +110,19 @@ module fileManager
         textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
 
     end function getTextBetweenStrings
+
+    function getFilenameFromPathNoExtention(filePath) result(filename)
+        character(:), allocatable, intent(in) :: filePath
+        character(:), allocatable :: filename
+
+        integer :: lastSlashIndex, lastDotIndex
+
+        lastSlashIndex = index(filePath, '/', back=.true.)
+        lastDotIndex = index(filePath, '.', back=.true.)
+
+        filename = filePath(lastSlashIndex + 1:lastDotIndex - 1)
+
+    end function getFilenameFromPathNoExtention
 
     function removeSubstring(lineToModify, substringToRemove) result(modifiedLine)
         character(:), allocatable, intent(in) :: lineToModify

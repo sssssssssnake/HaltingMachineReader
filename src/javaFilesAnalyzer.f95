@@ -1,5 +1,6 @@
 module JavaFilesAnalyzer
-    use fileManager, only: containsString, getTextBetweenStrings, replaceCharacterInString
+    use fileManager, only: containsString, getTextBetweenStrings,&
+     replaceCharacterInString, getFilenameFromPathNoExtention
     use javaAnalysisTypes, only: JavaFile
     implicit none
     
@@ -101,9 +102,10 @@ module JavaFilesAnalyzer
             javaPackageParsed = getTextBetweenStrings(packageContent, packageKeyword, semiColon)
             javaPackageParsed = trim(adjustl(replaceCharacterInString(javaPackageParsed, ".", "/")))
             allocate(character(256) :: mainClassName)
-            mainClassName = getTextBetweenStrings(sourceDirectory, parseFilePathKeyword1, parseFilePathKeyword2)
+            mainClassName = getFilenameFromPathNoExtention(sourceDirectory)
             ! use the initializeJavaFile from the JavaFile module
-            call mainFile%initializeJavaFile(sourceDirectory, mainClassName, javaPackageParsed, javaImports)
+            call mainFile%initializeJavaFile(sourceDirectory, mainClassName,&
+             javaPackageParsed, javaImports)
             call mainFile%resolveImportsToPaths
             print *, "Printing the mainFile"
             call mainFile%printJavaFile
@@ -113,7 +115,7 @@ module JavaFilesAnalyzer
                 javaImports(i) = keyPaths(i)
             end do
             ! use the initializeJavaFile from the JavaFile module
-            mainClassName = getTextBetweenStrings(sourceDirectory, parseFilePathKeyword1, parseFilePathKeyword2)
+            mainClassName = getFilenameFromPathNoExtention(sourceDirectory)
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName, blankString, javaImports)
             call mainFile%resolveImportsToPaths
             print *, "Printing the mainFile"
