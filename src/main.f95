@@ -11,7 +11,7 @@ program HelloWorld
 
     
 
-    myFilePath = "javacode/coolpackage/OrganizedChaos.java"
+    myFilePath = "javacode/Main.java"
 
     
     ! Read the file
