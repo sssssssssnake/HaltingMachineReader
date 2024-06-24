@@ -31,7 +31,7 @@ module javaAnalysisTypes
         character(:), allocatable :: relativeFilePath
         character(:), allocatable :: className
         character(:), allocatable :: packageName
-        character(:), allocatable, dimension(:) :: imports
+        type(Import), allocatable, dimension(:) :: imports
         integer, allocatable, dimension(:) :: importLines
         character(:), allocatable, dimension(:) :: codeLines
         character(:), allocatable, dimension(:, :) :: tokenizedCodeLines
@@ -136,7 +136,7 @@ module javaAnalysisTypes
         character(:), allocatable, intent(in) :: relativeFilePath
         character(:), allocatable, intent(in) :: className
         character(:), allocatable, intent(in) :: packageName
-        character(:), allocatable, dimension(:), intent(in) :: imports
+        type(Import), allocatable, dimension(:), intent(in) :: imports
         integer, allocatable, dimension(:), intent(in) :: importLines
         character(:), allocatable, dimension(:), intent(in) :: codeLines
 
