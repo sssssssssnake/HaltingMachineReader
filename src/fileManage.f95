@@ -3,7 +3,7 @@ module fileManager
     
     private
     public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString,&
-     removeSubstring, getFilenameFromPathNoExtention, fileExisits
+     removeSubstring, getFilenameFromPathNoExtention, fileExisits, readJavaFile
 
 
     character(:), allocatable :: reusableFilePath
