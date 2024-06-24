@@ -192,12 +192,11 @@ module fileManager
             fileExists = .false.
             return
         end if
-        fileExists = .true.
+        ! fileExists = .true.
         call readFile(filePath, originalFile, endingLine)
         print *, "Reading java file"
 
         ! in java, the lines can go on many lines, so we need to account for that
-        allocate(character(size(originalFile)) :: modifiedFile(endingLine))
 
         ! look for how many lines have imports, packages, or are empty
 
