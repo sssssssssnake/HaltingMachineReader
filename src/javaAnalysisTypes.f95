@@ -160,7 +160,7 @@ module javaAnalysisTypes
         character(:), allocatable :: originalFile
         character(:), allocatable :: workingLine
         integer :: i
-        integer :: numberOfCharacters
+        integer :: numberOfCharacters, workingCharacterNumber
         type(bracket), target, dimension(1000) :: brackets, braces
 
         do i= 1, size(this%codeLines)
@@ -170,6 +170,12 @@ module javaAnalysisTypes
         print *, "There are ", numberOfCharacters, " characters in the file ", this%relativeFilePath
 
         allocate(character(numberOfCharacters) :: originalFile)
+
+        workingCharacterNumber = 1
+        do i = 1, size(this%codeLines)
+            originalFile(workingCharacterNumber:workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1) = this%codeLines(i) // " "
+            workingCharacterNumber = workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1
+        end do
 
 
     end subroutine readJavaCodeBlocks

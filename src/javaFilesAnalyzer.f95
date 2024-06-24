@@ -5,7 +5,8 @@ module JavaFilesAnalyzer
     implicit none
     
     private
-    public :: setMainFileContent, findImportantJavaFiles, setSourceDirectory, mainFile
+    public :: setMainFileContent, findImportantJavaFiles, setSourceDirectory,&
+     mainFile, javaFiles
 
     character(:), allocatable :: sourceDirectory
     character(:), allocatable, dimension(:) :: javaImports
