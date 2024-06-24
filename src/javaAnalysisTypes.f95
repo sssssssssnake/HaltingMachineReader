@@ -163,7 +163,9 @@ module javaAnalysisTypes
 
         character(:), allocatable :: originalFile
         character(:), allocatable :: workingLine
-        integer :: i, bracketCounter, bracketDepth, braceCounter, braceDepth
+        integer :: i
+        integer :: bracketCounter, bracketDepth, reverseBracketCounter, reverseBracketDepth,&
+         braceCounter, braceDepth, reverseBraceCounter, reverseBraceDepth
         integer :: numberOfCharacters, workingCharacterNumber, workingCharacterAnalysis
         logical :: characterIsBracket, characterIsBrace
         type(bracket), target, dimension(1000) :: brackets, braces
@@ -198,13 +200,29 @@ module javaAnalysisTypes
                 bracketDepth = bracketDepth + 1
                 brackets(bracketCounter)%startingCharacter = i
                 brackets(bracketCounter)%occurence = bracketCounter
-                brackets(bracketCounter)%depth = bracketDepth
                 brackets(bracketCounter)%isClosing = .false.
-
             end if
 
             characterIsBracket = .false.
         end do
+
+        reverseBracketCounter = 0
+        reverseBracketDepth = 0
+        do i = numberOfCharacters, 1, -1
+            workingCharacterAnalysis = index(originalFile(i:i), "}")
+            characterIsBracket = workingCharacterAnalysis .gt. 0
+
+            if (characterIsBracket) then
+                reverseBracketCounter = reverseBracketCounter + 1
+                reverseBracketDepth = reverseBracketDepth + 1
+                brackets(reverseBracketCounter)%startingCharacter = i
+                brackets(reverseBracketCounter)%occurence = reverseBracketCounter
+                brackets(reverseBracketCounter)%isClosing = .true.
+            end if
+
+            characterIsBracket = .false.
+        end do
+
 
 
     end subroutine readJavaCodeBlocks
