@@ -4,7 +4,7 @@ module javaAnalysisTypes
     
 
     private
-    public :: JavaFile
+    public :: JavaFile, TokenizedJavaFile
     type :: JavaFile
         character(:), allocatable :: relativeFilePath
         character(:), allocatable :: className
