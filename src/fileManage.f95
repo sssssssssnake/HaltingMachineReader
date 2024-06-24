@@ -195,7 +195,6 @@ module fileManager
         if ( present(fileExists) ) then
             fileExists = .true.
         end if
-        ! fileExists = .true.
         call readFile(filePath, originalFile, endingLine)
         print *, "Reading java file"
 
