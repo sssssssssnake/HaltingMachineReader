@@ -216,7 +216,7 @@ module fileManager
         allocate(character(size(originalFile)) :: modifiedFile(lineCounter))
 
         lineSetter = 1
-        do i = 1, lineCounter
+        do i = 1, endingLine
             workingLine = originalFile(i)
             if ( containsString(importkeyword, workingLine) .or. &
                 containsString(packageKeyword, workingLine) .or. &
