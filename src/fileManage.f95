@@ -261,7 +261,8 @@ module fileManager
         character(:), allocatable :: workingLine
         character(:), allocatable, dimension(:) :: codeBlocksLines
         ! assumes that the code only goes 100 layers deep (plz don't break)
-        integer, dimension(2,100) :: beginningLine, endingLine
+        integer, dimension(2,100) :: beginningLine, endingLine,&
+         openBracketLocations, closeBracketLocations
         logical, dimension(100) :: needsReformatting, needsToBeResolved
         logical :: bracketLine
 
@@ -280,13 +281,13 @@ module fileManager
             if ( index(workingLine, "{") .gt. 0 ) then
                 bracketLayersDeep = bracketLayersDeep + 1
                 bracketCounter = bracketCounter + 1
-                beginningLine(1, bracketCounter) = i
-                beginningLine(2, bracketCounter) = index(workingLine, "{")
                 bracketLine = .true.
+                openBracketLocations(1, bracketCounter) = i
+                openBracketLocations(2, bracketCounter) = index(workingLine, "{")
             end if
             if ( index(workingLine, "}") .gt. 0 ) then
-                endingLine(1, bracketCounter) = i
-                endingLine(2, bracketCounter) = index(workingLine, "}")
+                closeBracketLocations(1, bracketCounter) = i
+                closeBracketLocations(2, bracketCounter) = index(workingLine, "}")
                 bracketCounter = bracketCounter - 1
                 bracketLayersDeep = bracketLayersDeep - 1
                 bracketLine = .true.
@@ -302,7 +303,7 @@ module fileManager
                 else
                     ! if the bracket is not the last character in the line,
                     ! then the line needs to be reformatted
-                    needsReformatting(bracketLayersDeep) = .true.
+                    needsReformatting(bracketCounter) = .true.
                 end if
             end if
             
