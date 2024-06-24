@@ -173,6 +173,26 @@ module fileManager
 
     end function fileExisits
 
+    subroutine readJavaFile(filePath, fileContents)
+        character(:), allocatable, intent(in) :: filePath
+        character(:), allocatable, dimension(:), intent(out) :: fileContents
+
+        character(:), allocatable, dimension(:) :: originalFile
+        character(:), allocatable, dimension(:) :: modifiedFile
+        integer :: i, endingLine
+    
+        if ( .not. fileExisits(filePath) ) then
+            fileContents = "File does not exist"
+            return
+        end if
+        call readFile(filePath, originalFile, endingLine)
+
+        ! in java, the lines can go on many lines, so we need to account for that
+        allocate(character(size(originalFile)) :: modifiedFile(endingLine))
+
+
+    end subroutine readJavaFile
+
 
 
 end module fileManager
