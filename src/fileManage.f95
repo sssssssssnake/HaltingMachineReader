@@ -270,7 +270,7 @@ module fileManager
         ! if the line contains a curly bracket, then increment the bracketLayersDeep
         ! if the line contains a closing curly bracket, then decrement the bracketLayersDeep
 
-        do i = 1, lastLine
+        goThroughFile: do i = 1, lastLine
             
             if ( index(workingLine, "{") .gt. 0 ) then
                 bracketLayersDeep = bracketLayersDeep + 1
@@ -286,16 +286,15 @@ module fileManager
             if ( index(workingLine, ";") .gt. 0 ) then
                 if (index(workingLine, ";") .eq. len(trim(workingLine)) ) then
                     ! if the semicolon is the last character in the line, then move to the next line
-                    cycle
+                    ! unless there is a previous line that is unresolved
+                    cycle goThroughFile
                 else
-                    ! if the semicolon is not the last character in the line, then add the line to the code block
-                    lineCounter = lineCounter + 1
-                    beginningLine(1, lineCounter) = i
-                    beginningLine(2, lineCounter) = index(workingLine, ";")
-                    needsReformatting(lineCounter) = .true.
+
                 end if
+            else
+
             end if
-        end do
+        end do goThroughFile
 
         deallocate(workingLine)
         deallocate(codeBlocksLines)
