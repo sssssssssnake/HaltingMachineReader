@@ -11,7 +11,6 @@ module javaAnalysisTypes
         character(:), allocatable :: packageName
         character(:), allocatable, dimension(:) :: imports
         type(Import), allocatable, dimension(:) :: importObjects
-        
 
         contains
         procedure :: initializeJavaFile
@@ -72,7 +71,6 @@ module javaAnalysisTypes
         character(:), allocatable :: keyword1, keyword2
         character(:), allocatable :: javaDotKeyword1, javaDotKeyword2
         character(:), allocatable :: staticKeyword, staticKeyword2
-        logical :: isStatic
         integer :: i
         i = 1
         keyword1 = "import "

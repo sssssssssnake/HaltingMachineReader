@@ -11,7 +11,7 @@ program HelloWorld
 
     
 
-    myFilePath = "javacode/Main.java"
+    myFilePath = "FunTest.java"
 
     
     ! Read the file
@@ -22,7 +22,12 @@ program HelloWorld
     call setSourceDirectory(myFilePath)
     call findImportantJavaFiles(endingLine)
 
-    testParse = mainFile%packageName // "/" // mainFile%className // ".java"
+    ! Test the file
+    if (mainFile%packageName .eq. "") then
+        testParse = mainFile%className // ".java"
+    else if (allocated(mainFile%className)) then
+        testParse = mainFile%packageName // "/" // mainFile%className // ".java"
+    end if
 
     print *, testParse
     if (testParse .ne. myFilePath) then

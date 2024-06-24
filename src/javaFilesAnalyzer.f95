@@ -33,6 +33,7 @@ module JavaFilesAnalyzer
         character(:), allocatable :: keyPaths(:)
         character(:), allocatable :: javaPackageParsed, semiColon, packageContent, mainClassName
         character(:), allocatable :: parseFilePathKeyword1, parseFilePathKeyword2
+        character(:), allocatable :: blankString
 
         numberOfImports = 0
         keyPathsCounter = 1
@@ -42,6 +43,7 @@ module JavaFilesAnalyzer
         hasPackage = .false.
         parseFilePathKeyword1 = "/"
         parseFilePathKeyword2 = "."
+        blankString = ""
 
         
         do i = 1, lastLine
@@ -105,6 +107,18 @@ module JavaFilesAnalyzer
             call mainFile%resolveImportsToPaths
             print *, "Printing the mainFile"
             call mainFile%printJavaFile
+        else if ( .not. hasPackage ) then
+            allocate(character(256) :: javaImports(numberOfImports))
+            do i= 1, numberOfImports
+                javaImports(i) = keyPaths(i)
+            end do
+            ! use the initializeJavaFile from the JavaFile module
+            mainClassName = getTextBetweenStrings(sourceDirectory, parseFilePathKeyword1, parseFilePathKeyword2)
+            call mainFile%initializeJavaFile(sourceDirectory, mainClassName, blankString, javaImports)
+            call mainFile%resolveImportsToPaths
+            print *, "Printing the mainFile"
+            call mainFile%printJavaFile
+                
         end if
 
         
@@ -114,9 +128,9 @@ module JavaFilesAnalyzer
         deallocate(packageKeyword)
         deallocate(lineContent)
         deallocate(keyPaths)
-        deallocate(javaPackageParsed)
+        ! deallocate(javaPackageParsed)
         deallocate(semiColon)
-        deallocate(packageContent)
+        ! deallocate(packageContent)
         deallocate(parseFilePathKeyword1)
         deallocate(parseFilePathKeyword2)
 
