@@ -262,6 +262,7 @@ module fileManager
         character(:), allocatable, dimension(:) :: codeBlocksLines
         ! assumes that the code only goes 100 layers deep (plz don't break)
         integer, dimension(2,100) :: beginningLine, endingLine
+        logical, dimension(100) :: needsReformatting, needsToBeResolved
 
         bracketLayersDeep = 0
 
@@ -270,6 +271,17 @@ module fileManager
         ! if the line contains a closing curly bracket, then decrement the bracketLayersDeep
 
         do i = 1, lastLine
+            
+            if ( index(workingLine, "{") .gt. 0 ) then
+                bracketLayersDeep = bracketLayersDeep + 1
+                beginningLine(bracketLayersDeep, 1) = i
+            end if
+            if ( index(workingLine, "}") .gt. 0 ) then
+                endingLine(bracketLayersDeep, 1) = i
+                bracketLayersDeep = bracketLayersDeep - 1
+            end if
+            deallocate(workingLine)
+
             workingLine = fileContents(i)
             if ( index(workingLine, ";") .gt. 0 ) then
                 if (index(workingLine, ";") .eq. len(trim(workingLine)) ) then
@@ -280,17 +292,9 @@ module fileManager
                     lineCounter = lineCounter + 1
                     beginningLine(1, lineCounter) = i
                     beginningLine(2, lineCounter) = index(workingLine, ";")
+                    needsReformatting(lineCounter) = .true.
                 end if
             end if
-            if ( index(workingLine, "{") .gt. 0 ) then
-                bracketLayersDeep = bracketLayersDeep + 1
-                beginningLine(bracketLayersDeep, 1) = i
-            end if
-            if ( index(workingLine, "}") .gt. 0 ) then
-                endingLine(bracketLayersDeep, 1) = i
-                bracketLayersDeep = bracketLayersDeep - 1
-            end if
-            deallocate(workingLine)
         end do
 
         deallocate(workingLine)
