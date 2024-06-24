@@ -2,7 +2,8 @@
 
 program HelloWorld
     use fileManager, only: readFile, replaceCharacterInString
-    use JavaFilesAnalyzer, only: findImportantJavaFiles, setMainFileContent, setSourceDirectory, mainFile
+    use JavaFilesAnalyzer, only: findImportantJavaFiles, setMainFileContent,&
+     setSourceDirectory, mainFile
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
