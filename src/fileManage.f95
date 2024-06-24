@@ -261,7 +261,7 @@ module fileManager
         character(:), allocatable :: workingLine
         character(:), allocatable, dimension(:) :: codeBlocksLines
         ! assumes that the code only goes 100 layers deep (plz don't break)
-        integer, dimension(100,2) :: beginningLine, endingLine
+        integer, dimension(2,100) :: beginningLine, endingLine
 
         bracketLayersDeep = 0
 
