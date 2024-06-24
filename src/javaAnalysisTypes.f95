@@ -16,7 +16,7 @@ module javaAnalysisTypes
         contains
         procedure :: initializeJavaFile
         procedure :: printJavaFile
-        procedure :: convertImportsToPaths
+        procedure :: resolveImportsToPaths
     end type JavaFile
 
     type :: Import
@@ -59,17 +59,19 @@ module javaAnalysisTypes
         print *, "Imports: "
         do i = 1, size(this%imports)
             print *, "'", trim(this%importObjects(i)%importPath), "'"
+            print *, "Is Static: ", this%importObjects(i)%isStatic, " Is Wildcard: ", this%importObjects(i)%isWildcard
         end do
     end subroutine printJavaFile
 
 
     !> Converts the imports to paths and names
     !! @param this The JavaFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
-    subroutine convertImportsToPaths(this)
+    subroutine resolveImportsToPaths(this)
         class(JavaFile), intent(inout) :: this
         character(:), allocatable :: workingImport
         character(:), allocatable :: keyword1, keyword2
         character(:), allocatable :: javaDotKeyword1, javaDotKeyword2
+        logical :: isStatic
         integer :: i
         i = 1
         keyword1 = "import "
@@ -85,6 +87,7 @@ module javaAnalysisTypes
             workingImport = getTextBetweenStrings(workingImport, keyword1, keyword2)
             this%importObjects(i)%originalImportText = workingImport
             this%importObjects(i)%isWildcard = index(workingImport, "*") .gt. 0
+            this%importObjects(i)%isStatic = index(workingImport, "static") .gt. 0
             if (this%importObjects(i)%isWildcard) then
                 this%importObjects(i)%importPath = trim(adjustl(replaceCharacterInString(workingImport, ".", "/")))
                 this%importObjects(i)%importName = ""
@@ -94,7 +97,7 @@ module javaAnalysisTypes
             end if
         end do
 
-    end subroutine convertImportsToPaths
+    end subroutine resolveImportsToPaths
 
     
 
