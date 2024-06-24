@@ -223,6 +223,13 @@ module javaAnalysisTypes
             characterIsBracket = .false.
         end do
 
+        if (bracketCounter .ne. reverseBracketCounter) then
+            print *, "Bracket Counter: ", bracketCounter, " Reverse Bracket Counter: ", reverseBracketCounter
+            print *, "Bracket Depth: ", bracketDepth, " Reverse Bracket Depth: ", reverseBracketDepth
+            print *, "Brackets do not match"
+            return
+        end if
+
 
 
     end subroutine readJavaCodeBlocks
