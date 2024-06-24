@@ -31,11 +31,12 @@ module javaAnalysisTypes
         character(:), allocatable :: relativeFilePath
         character(:), allocatable :: className
         character(:), allocatable :: packageName
-        character(:), allocatable, dimension(:) :: imports, importLines
+        character(:), allocatable, dimension(:) :: imports
+        integer, allocatable, dimension(:) :: importLines
         character(:), allocatable, dimension(:) :: codeLines
         character(:), allocatable, dimension(:, :) :: tokenizedCodeLines
         contains 
-        ! procedure :: initializeTokenizedJavaFile
+        procedure :: initializeTokenizedJavaFile
         ! procedure :: printTokenizedJavaFile
         ! procedure :: tokenizeCodeLines
     end type TokenizedJavaFile
@@ -121,6 +122,31 @@ module javaAnalysisTypes
         end do
 
     end subroutine resolveImportsToPaths
+
+    !> Is essentially a constructor for the TokenizedJavaFile type
+    !! @param this The TokenizedJavaFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
+    !! @param relativeFilePath The relative file path of the Java file
+    !! @param className The name of the class in the Java
+    !! @param packageName The package name of the Java file
+    !! @param imports The imports of the Java file
+    !! @param importLines The import lines of the Java file
+    !! @param codeLines The code lines of the Java file
+    subroutine initializeTokenizedJavaFile(this, relativeFilePath, className, packageName, imports, importLines, codeLines)
+        class(TokenizedJavaFile), intent(inout) :: this
+        character(:), allocatable, intent(in) :: relativeFilePath
+        character(:), allocatable, intent(in) :: className
+        character(:), allocatable, intent(in) :: packageName
+        character(:), allocatable, dimension(:), intent(in) :: imports
+        integer, allocatable, dimension(:), intent(in) :: importLines
+        character(:), allocatable, dimension(:), intent(in) :: codeLines
+
+        this%relativeFilePath = relativeFilePath
+        this%className = className
+        this%packageName = packageName
+        this%imports = imports
+        this%importLines = importLines
+        this%codeLines = codeLines
+    end subroutine initializeTokenizedJavaFile
 
     
 
