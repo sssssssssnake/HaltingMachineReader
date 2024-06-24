@@ -40,9 +40,6 @@ program HelloWorld
         print *, "Welcome to the root directory!"
     end if
 
-    do i = 1, endingLine
-        print *, trim(myFileContents(i)), len(trim(myFileContents(i)))
-    end do
 
     call readJavaFile(myFilePath, testFileContents, endingLine)
     do i = 1, endingLine
