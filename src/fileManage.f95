@@ -134,14 +134,16 @@ module fileManager
         substringIndex = index(lineToModify, substringToRemove)
 
         if ( substringIndex .gt. 0 ) then
-            modifiedLine = lineToModify(1:substringIndex-1) // lineToModify(substringIndex + len(substringToRemove):)
+            modifiedLine = lineToModify(1:substringIndex-1) // lineToModify(substringIndex +&
+             len(substringToRemove):)
         else
             modifiedLine = lineToModify
         end if
 
     end function removeSubstring
 
-    function replaceCharacterInString(lineToReplace, characterToReplace, replacementCharacter) result(replacedLine)
+    function replaceCharacterInString(lineToReplace, characterToReplace, replacementCharacter)&
+         result(replacedLine)
         character(:), allocatable, intent(in) :: lineToReplace
         character, intent(in) :: characterToReplace
         character, intent(in) :: replacementCharacter
@@ -269,7 +271,7 @@ module fileManager
 
         do i = 1, lastLine
             if ( index(fileContents(i), ";") .gt. 0 ) then
-                if (index(fileContents(i)), ";" .eq. len(trim(fileContents(i))) ) then
+                if (index(fileContents(i), ";") .eq. len(trim(fileContents(i))) ) then
                     ! if the semicolon is the last character in the line, then move to the next line
                     cycle
                 end if
