@@ -270,23 +270,32 @@ module fileManager
         ! if the line contains a closing curly bracket, then decrement the bracketLayersDeep
 
         do i = 1, lastLine
-            if ( index(fileContents(i), ";") .gt. 0 ) then
-                if (index(fileContents(i), ";") .eq. len(trim(fileContents(i))) ) then
+            workingLine = fileContents(i)
+            if ( index(workingLine, ";") .gt. 0 ) then
+                if (index(workingLine, ";") .eq. len(trim(workingLine)) ) then
                     ! if the semicolon is the last character in the line, then move to the next line
                     cycle
+                else
+                    ! if the semicolon is not the last character in the line, then add the line to the code block
+                    lineCounter = lineCounter + 1
+                    beginningLine(1, lineCounter) = i
+                    beginningLine(2, lineCounter) = index(workingLine, ";")
                 end if
             end if
-            if ( index(fileContents(i), "{") .gt. 0 ) then
+            if ( index(workingLine, "{") .gt. 0 ) then
                 bracketLayersDeep = bracketLayersDeep + 1
                 beginningLine(bracketLayersDeep, 1) = i
             end if
-            if ( index(fileContents(i), "}") .gt. 0 ) then
+            if ( index(workingLine, "}") .gt. 0 ) then
                 endingLine(bracketLayersDeep, 1) = i
                 bracketLayersDeep = bracketLayersDeep - 1
             end if
+            deallocate(workingLine)
         end do
 
-
+        deallocate(workingLine)
+        deallocate(codeBlocksLines)
+        
 
     end subroutine convertFileToCodeBlocks
 
