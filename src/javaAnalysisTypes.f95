@@ -43,6 +43,7 @@ module javaAnalysisTypes
 
     type :: bracket
         integer :: startingCharacter
+        integer :: occurence
         integer :: depth
         logical :: isClosing
         type(bracket), pointer :: matchingBracket
@@ -155,13 +156,16 @@ module javaAnalysisTypes
     end subroutine initializePrepareTokeizedFile
 
 
+    !> Reads the Java code blocks and pretokenizes them
+    !! @param this The PrepareTokeizedFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
     subroutine readJavaCodeBlocks(this)
-        class(PrepareTokeizedFile), intent(in) :: this
+        class(PrepareTokeizedFile), intent(inout) :: this
 
         character(:), allocatable :: originalFile
         character(:), allocatable :: workingLine
-        integer :: i
-        integer :: numberOfCharacters, workingCharacterNumber
+        integer :: i, bracketCounter, bracketDepth, braceCounter, braceDepth
+        integer :: numberOfCharacters, workingCharacterNumber, workingCharacterAnalysis
+        logical :: characterIsBracket, characterIsBrace
         type(bracket), target, dimension(1000) :: brackets, braces
 
         numberOfCharacters = 1
@@ -181,6 +185,25 @@ module javaAnalysisTypes
                 originalFile(workingCharacterNumber:workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1) = this%codeLines(i) // " "
                 workingCharacterNumber = workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1
             end if
+        end do
+
+        bracketCounter = 0
+        bracketDepth = 0
+        do i= 1, numberOfCharacters
+            workingCharacterAnalysis = index(originalFile(i:i), "{")
+            characterIsBracket = workingCharacterAnalysis .gt. 0
+
+            if (characterIsBracket) then
+                bracketCounter = bracketCounter + 1
+                bracketDepth = bracketDepth + 1
+                brackets(bracketCounter)%startingCharacter = i
+                brackets(bracketCounter)%occurence = bracketCounter
+                brackets(bracketCounter)%depth = bracketDepth
+                brackets(bracketCounter)%isClosing = .false.
+
+            end if
+
+            characterIsBracket = .false.
         end do
 
 
