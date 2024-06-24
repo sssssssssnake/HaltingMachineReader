@@ -43,6 +43,7 @@ module javaAnalysisTypes
 
     type :: bracket
         integer :: startingCharacter
+        integer :: depth
         logical :: isClosing
         type(bracket), pointer :: matchingBracket
     end type bracket
