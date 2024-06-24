@@ -41,6 +41,11 @@ module javaAnalysisTypes
         ! procedure :: tokenizeCodeLines
     end type PrepareTokeizedFile
 
+    type :: bracket
+        integer :: startingCharacter
+        logical :: isClosing
+        type(bracket), pointer :: matchingBracket
+    end type bracket
     contains
 
     !> Is essentially a constructor for the JavaFile type
@@ -149,11 +154,22 @@ module javaAnalysisTypes
     end subroutine initializePrepareTokeizedFile
 
 
-    subroutine readJavaCodeBlocks(filePath, fileToBeTokenized)
-        type(PrepareTokeizedFile), intent(in) :: filePath
+    subroutine readJavaCodeBlocks(fileToAnalyze, fileToBeTokenized)
+        type(PrepareTokeizedFile), intent(in) :: fileToAnalyze
         character(:), allocatable, dimension(:), intent(out) :: fileToBeTokenized
 
         character(:), allocatable, dimension(:) :: originalFile
+        character(:), allocatable :: workingLine
+        integer :: i
+        integer :: numberOfCharacters
+        type(bracket), target, dimension(1000) :: brackets
+
+        do i= 1, size(fileToAnalyze%codeLines)
+            workingLine = fileToAnalyze%codeLines(i)
+            
+        end do
+
+
     end subroutine readJavaCodeBlocks
 
     
