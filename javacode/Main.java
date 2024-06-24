@@ -9,7 +9,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<String> list = new ArrayList<>();
-        RandomLogic inner = new RandomLogic();
+        RandomLogic bob = new RandomLogic();
+        RandomLogic.InnerClass inner = bob.new InnerClass();
 
         System.out.println("Hello, World!");
         boolean test = true;
