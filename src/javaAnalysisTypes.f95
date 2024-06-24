@@ -231,6 +231,48 @@ module javaAnalysisTypes
         end if
 
 
+        braceCounter = 0
+        braceDepth = 0
+        do i= 1, numberOfCharacters
+            workingCharacterAnalysis = index(originalFile(i:i), "{")
+            characterIsbrace = workingCharacterAnalysis .gt. 0
+
+            if (characterIsbrace) then
+                braceCounter = braceCounter + 1
+                braceDepth = braceDepth + 1
+                braces(braceCounter)%startingCharacter = i
+                braces(braceCounter)%occurence = braceCounter
+                braces(braceCounter)%isClosing = .false.
+            end if
+
+            characterIsbrace = .false.
+        end do
+
+        reversebraceCounter = 0
+        reversebraceDepth = 0
+        do i = numberOfCharacters, 1, -1
+            workingCharacterAnalysis = index(originalFile(i:i), "}")
+            characterIsbrace = workingCharacterAnalysis .gt. 0
+
+            if (characterIsbrace) then
+                reversebraceCounter = reversebraceCounter + 1
+                reversebraceDepth = reversebraceDepth + 1
+                braces(reversebraceCounter)%startingCharacter = i
+                braces(reversebraceCounter)%occurence = reversebraceCounter
+                braces(reversebraceCounter)%isClosing = .true.
+            end if
+
+            characterIsbrace = .false.
+        end do
+
+        if (braceCounter .ne. reversebraceCounter) then
+            print *, "brace Counter: ", braceCounter, " Reverse brace Counter: ", reversebraceCounter
+            print *, "brace Depth: ", braceDepth, " Reverse brace Depth: ", reversebraceDepth
+            print *, "braces do not match"
+            return
+        end if
+
+
 
     end subroutine readJavaCodeBlocks
 
