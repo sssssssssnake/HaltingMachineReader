@@ -1,5 +1,5 @@
 module javaAnalysisTypes
-    use fileManager, only: replaceCharacterInString, getTextBetweenStrings
+    use fileManager, only: replaceCharacterInString, getTextBetweenStrings, removeSubstring
     implicit none
     
 
@@ -99,7 +99,7 @@ module javaAnalysisTypes
                 this%importObjects(i)%importName = getTextBetweenStrings(workingImport, javaDotKeyword1, javaDotKeyword2)
             end if
             if (this%importObjects(i)%isStatic) then
-                this%importObjects(i)%importPath = trim(adjustl(getTextBetweenStrings(workingImport, staticKeyword, staticKeyword2)))
+                this%importObjects(i)%importPath = trim(adjustl(removeSubstring(workingImport, staticKeyword)))
             end if
         end do
 

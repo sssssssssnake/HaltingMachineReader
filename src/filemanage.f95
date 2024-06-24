@@ -2,7 +2,7 @@ module fileManager
     implicit none
     
     private
-    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString
+    public :: readFile, containsString, getTextBetweenStrings, replaceCharacterInString, removeSubstring
 
 
     character(:), allocatable :: reusableFilePath
@@ -109,6 +109,23 @@ module fileManager
         textBetweenStrings = lineToAnalyze(startStringIndex:endStringIndex)
 
     end function getTextBetweenStrings
+
+    function removeSubstring(lineToModify, substringToRemove) result(modifiedLine)
+        character(:), allocatable, intent(in) :: lineToModify
+        character(:), allocatable, intent(in) :: substringToRemove
+        character(:), allocatable :: modifiedLine
+
+        integer :: substringIndex
+
+        substringIndex = index(lineToModify, substringToRemove)
+
+        if ( substringIndex .gt. 0 ) then
+            modifiedLine = lineToModify(1:substringIndex-1) // lineToModify(substringIndex + len(substringToRemove):)
+        else
+            modifiedLine = lineToModify
+        end if
+
+    end function removeSubstring
 
     function replaceCharacterInString(lineToReplace, characterToReplace, replacementCharacter) result(replacedLine)
         character(:), allocatable, intent(in) :: lineToReplace
