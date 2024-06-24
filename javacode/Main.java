@@ -6,6 +6,7 @@ import java.util.Scanner;
 import static javacode.coolpackage.OrganizedChaos.five; // Import all classes in the package
 import javacode.coolpackage.RandomLogic; // Import all static classes in the package
 import java.util.Arrays.*; // Import all classes in the package  
+import javacode.coolpackage.OrganizedChaos;
 @SuppressWarnings("unused")
 public class Main {
     // Main method
@@ -13,7 +14,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<String> list = new ArrayList<>();
         RandomLogic bob = new RandomLogic();
-        RandomLogic.InnerClass inner = bob.new InnerClass();
+        OrganizedChaos oc = new OrganizedChaos();
+        RandomLogic.InnerClass inner = bob.new InnerClass( oc.new FunnyInnerClass());
 
         System.out.println("Hello, World!");
         boolean test = true;
