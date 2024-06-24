@@ -257,7 +257,7 @@ module fileManager
     subroutine convertFileToCodeBlocks(fileContents, lastLine)
         character(:), allocatable, dimension(:), intent(inout) :: fileContents
         integer, intent(in) :: lastLine
-        integer :: i, bracketLayersDeep, lineCounter
+        integer :: i, bracketLayersDeep, lineCounter, bracketCounter
         character(:), allocatable :: workingLine
         character(:), allocatable, dimension(:) :: codeBlocksLines
         ! assumes that the code only goes 100 layers deep (plz don't break)
@@ -265,6 +265,7 @@ module fileManager
         logical, dimension(100) :: needsReformatting, needsToBeResolved
 
         bracketLayersDeep = 0
+        bracketCounter = 0
 
         ! if the line contains a semicolon, a curly bracket, or an at symbol, then move to the next line
         ! if the line contains a curly bracket, then increment the bracketLayersDeep
@@ -275,10 +276,14 @@ module fileManager
             
             if ( index(workingLine, "{") .gt. 0 ) then
                 bracketLayersDeep = bracketLayersDeep + 1
-                beginningLine(bracketLayersDeep, 1) = i
+                bracketCounter = bracketCounter + 1
+                beginningLine(1, bracketCounter) = i
+                beginningLine(2, bracketCounter) = index(workingLine, "{")
             end if
             if ( index(workingLine, "}") .gt. 0 ) then
-                endingLine(bracketLayersDeep, 1) = i
+                endingLine(1, bracketCounter) = i
+                endingLine(2, bracketCounter) = index(workingLine, "}")
+                bracketCounter = bracketCounter - 1
                 bracketLayersDeep = bracketLayersDeep - 1
             end if
             deallocate(workingLine)
@@ -299,7 +304,6 @@ module fileManager
             ! end if
         end do goThroughFile
 
-        deallocate(workingLine)
         deallocate(codeBlocksLines)
         
 
