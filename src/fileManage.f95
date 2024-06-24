@@ -263,6 +263,7 @@ module fileManager
         ! assumes that the code only goes 100 layers deep (plz don't break)
         integer, dimension(2,100) :: beginningLine, endingLine
         logical, dimension(100) :: needsReformatting, needsToBeResolved
+        logical :: bracketLine
 
         bracketLayersDeep = 0
         bracketCounter = 0
@@ -272,22 +273,39 @@ module fileManager
         ! if the line contains a closing curly bracket, then decrement the bracketLayersDeep
 
         goThroughFile: do i = 1, lastLine
+
             workingLine = fileContents(i)
+            bracketLine = .false.
             
             if ( index(workingLine, "{") .gt. 0 ) then
                 bracketLayersDeep = bracketLayersDeep + 1
                 bracketCounter = bracketCounter + 1
                 beginningLine(1, bracketCounter) = i
                 beginningLine(2, bracketCounter) = index(workingLine, "{")
+                bracketLine = .true.
             end if
             if ( index(workingLine, "}") .gt. 0 ) then
                 endingLine(1, bracketCounter) = i
                 endingLine(2, bracketCounter) = index(workingLine, "}")
                 bracketCounter = bracketCounter - 1
                 bracketLayersDeep = bracketLayersDeep - 1
+                bracketLine = .true.
             end if
-            deallocate(workingLine)
 
+            if (bracketLine) then 
+                !the line contains a bracket, so let's check and make sure that it is
+                ! the last character in the line
+                if ( index(workingLine, "{") .eq. len(trim(workingLine)) ) then
+                    ! if the bracket is the last character in the line, then move to the next line
+                    ! unless there is a previous line that is unresolved
+                    cycle goThroughFile
+                else
+                    ! if the bracket is not the last character in the line,
+                    ! then the line needs to be reformatted
+                    needsReformatting(bracketLayersDeep) = .true.
+                end if
+            end if
+            
             ! if ( index(workingLine, ";") .gt. 0 ) then
             !     if (index(workingLine, ";") .eq. len(trim(workingLine)) ) then
             !         ! if the semicolon is the last character in the line, then move to the next line
@@ -300,8 +318,11 @@ module fileManager
             !     end if
             ! else
             !     ! if the line does not contain a semicolon, then it needs to be resolved
-
+            
             ! end if
+
+
+            deallocate(workingLine)
         end do goThroughFile
 
         deallocate(codeBlocksLines)
