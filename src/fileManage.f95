@@ -245,6 +245,48 @@ module fileManager
 
     end subroutine readJavaFile
 
+    !> Converts a file into code blocks.
+    !!
+    !! @param fileContents The contents of the file to be converted.
+    !! @param lastLine The last line of the file.
+    !!
+    !! @return the code blocks in the file.
+    !! This basically reformats the java code to parser friendly code.
+    subroutine convertFileToCodeBlocks(fileContents, lastLine)
+        character(:), allocatable, dimension(:), intent(inout) :: fileContents
+        integer, intent(in) :: lastLine
+        integer :: i, bracketLayersDeep, lineCounter
+        character(:), allocatable :: workingLine
+        character(:), allocatable, dimension(:) :: codeBlocksLines
+        ! assumes that the code only goes 100 layers deep (plz don't break)
+        integer, dimension(100,2) :: beginningLine, endingLine
+
+        bracketLayersDeep = 0
+
+        ! if the line contains a semicolon, a curly bracket, or an at symbol, then move to the next line
+        ! if the line contains a curly bracket, then increment the bracketLayersDeep
+        ! if the line contains a closing curly bracket, then decrement the bracketLayersDeep
+
+        do i = 1, lastLine
+            if ( index(fileContents(i), ";") .gt. 0 ) then
+                if (index(fileContents(i)), ";" .eq. len(trim(fileContents(i))) ) then
+                    ! if the semicolon is the last character in the line, then move to the next line
+                    cycle
+                end if
+            end if
+            if ( index(fileContents(i), "{") .gt. 0 ) then
+                bracketLayersDeep = bracketLayersDeep + 1
+                beginningLine(bracketLayersDeep, 1) = i
+            end if
+            if ( index(fileContents(i), "}") .gt. 0 ) then
+                endingLine(bracketLayersDeep, 1) = i
+                bracketLayersDeep = bracketLayersDeep - 1
+            end if
+        end do
+
+
+
+    end subroutine convertFileToCodeBlocks
 
 
 end module fileManager
