@@ -71,6 +71,7 @@ module javaAnalysisTypes
         character(:), allocatable :: workingImport
         character(:), allocatable :: keyword1, keyword2
         character(:), allocatable :: javaDotKeyword1, javaDotKeyword2
+        character(:), allocatable :: staticKeyword, staticKeyword2
         logical :: isStatic
         integer :: i
         i = 1
@@ -78,6 +79,8 @@ module javaAnalysisTypes
         keyword2 = ";"
         javaDotKeyword1 = "."
         javaDotKeyword2 = ";"
+        staticKeyword = "static"
+        staticKeyword2 = "/"
 
         print *, "Converting imports to paths"
         allocate(this%importObjects(size(this%imports)))
@@ -94,6 +97,9 @@ module javaAnalysisTypes
             else
                 this%importObjects(i)%importPath = trim(adjustl(replaceCharacterInString(workingImport, ".", "/"))) // ".java"
                 this%importObjects(i)%importName = getTextBetweenStrings(workingImport, javaDotKeyword1, javaDotKeyword2)
+            end if
+            if (this%importObjects(i)%isStatic) then
+                this%importObjects(i)%importPath = trim(adjustl(getTextBetweenStrings(workingImport, staticKeyword, staticKeyword2)))
             end if
         end do
 
