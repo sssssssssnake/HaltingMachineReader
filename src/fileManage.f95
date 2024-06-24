@@ -180,7 +180,12 @@ module fileManager
 
         character(:), allocatable, dimension(:) :: originalFile
         character(:), allocatable, dimension(:) :: modifiedFile
-        integer :: i, endingLine
+        character(:), allocatable :: workingLine, importkeyword, packageKeyword
+        integer :: i, endingLine, lineCounter
+        
+        lineCounter = 0
+        importkeyword = "import"
+        packageKeyword = "package"
     
         if ( .not. fileExisits(filePath) ) then
             fileContents = "File does not exist"
@@ -192,6 +197,20 @@ module fileManager
 
         ! in java, the lines can go on many lines, so we need to account for that
         allocate(character(size(originalFile)) :: modifiedFile(endingLine))
+
+        ! look for how many lines have imports, packages, or are empty
+
+        do i = 1, endingLine
+            workingLine = originalFile(i)
+            if ( containsString(importkeyword, workingLine) .or. &
+                containsString(packageKeyword, workingLine) .or. &
+                len(trim(originalFile(i)) ) .eq. 0 ) then
+                cycle
+            else
+                lineCounter = lineCounter + 1
+            end if
+        end do
+
 
 
     end subroutine readJavaFile

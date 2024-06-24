@@ -8,7 +8,7 @@ program HelloWorld
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:)
     character(:), allocatable :: testParse
-    integer :: endingLine
+    integer :: endingLine, i
 
     
 
@@ -39,6 +39,10 @@ program HelloWorld
     else if ( testParse .eq. myFilePath ) then
         print *, "Welcome to the root directory!"
     end if
+
+    do i = 1, endingLine
+        print *, trim(myFileContents(i)), len(trim(myFileContents(i)))
+    end do
 
 
     ! Deallocate the memory
