@@ -289,9 +289,12 @@ module fileManager
                     ! unless there is a previous line that is unresolved
                     cycle goThroughFile
                 else
+                    ! if the semicolon is not the last character in the line,
+                    ! then the line needs to be reformatted
 
                 end if
             else
+                ! if the line does not contain a semicolon, then it needs to be resolved
 
             end if
         end do goThroughFile
