@@ -164,9 +164,12 @@ module javaAnalysisTypes
         integer :: numberOfCharacters, workingCharacterNumber
         type(bracket), target, dimension(1000) :: brackets, braces
 
+        numberOfCharacters = 1
         do i= 1, size(this%codeLines)
-            workingLine = this%codeLines(i)
-            numberOfCharacters = numberOfCharacters + len(trim(adjustl(workingLine))) + 1
+            if ( len(trim(adjustl(this%codeLines(i)))) .gt. 0) then
+                workingLine = this%codeLines(i)
+                numberOfCharacters = numberOfCharacters + len(trim(adjustl(workingLine))) + 1
+            end if
         end do
         print *, "There are ", numberOfCharacters, " characters in the file ", this%relativeFilePath
 
@@ -174,8 +177,10 @@ module javaAnalysisTypes
 
         workingCharacterNumber = 1
         do i = 1, size(this%codeLines)
-            originalFile(workingCharacterNumber:workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1) = this%codeLines(i) // " "
-            workingCharacterNumber = workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1
+            if ( len(trim(adjustl(this%codeLines(i)))) .gt. 0) then
+                originalFile(workingCharacterNumber:workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1) = this%codeLines(i) // " "
+                workingCharacterNumber = workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1
+            end if
         end do
 
 
