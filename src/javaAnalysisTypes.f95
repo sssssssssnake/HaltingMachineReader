@@ -154,21 +154,22 @@ module javaAnalysisTypes
     end subroutine initializePrepareTokeizedFile
 
 
-    subroutine readJavaCodeBlocks(this, fileToBeTokenized)
+    subroutine readJavaCodeBlocks(this)
         class(PrepareTokeizedFile), intent(in) :: this
-        character(:), allocatable, dimension(:), intent(out) :: fileToBeTokenized
 
-        character(:), allocatable, dimension(:) :: originalFile
+        character(:), allocatable :: originalFile
         character(:), allocatable :: workingLine
         integer :: i
         integer :: numberOfCharacters
-        type(bracket), target, dimension(1000) :: brackets
+        type(bracket), target, dimension(1000) :: brackets, braces
 
         do i= 1, size(this%codeLines)
             workingLine = this%codeLines(i)
-            numberOfCharacters = numberOfCharacters + len(trim(adjustl(workingLine)))
+            numberOfCharacters = numberOfCharacters + len(trim(adjustl(workingLine))) + 1
         end do
         print *, "There are ", numberOfCharacters, " characters in the file ", this%relativeFilePath
+
+        allocate(character(numberOfCharacters) :: originalFile)
 
 
     end subroutine readJavaCodeBlocks
