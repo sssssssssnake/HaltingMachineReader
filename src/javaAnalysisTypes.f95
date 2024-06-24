@@ -27,7 +27,20 @@ module javaAnalysisTypes
 
     end type Import
 
-    contains 
+    type :: TokenizedJavaFile
+        character(:), allocatable :: relativeFilePath
+        character(:), allocatable :: className
+        character(:), allocatable :: packageName
+        character(:), allocatable, dimension(:) :: imports, importLines
+        character(:), allocatable, dimension(:) :: codeLines
+        character(:), allocatable, dimension(:, :) :: tokenizedCodeLines
+        contains 
+        ! procedure :: initializeTokenizedJavaFile
+        ! procedure :: printTokenizedJavaFile
+        ! procedure :: tokenizeCodeLines
+    end type TokenizedJavaFile
+
+    contains
 
     !> Is essentially a constructor for the JavaFile type
     !! @param this The JavaFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
