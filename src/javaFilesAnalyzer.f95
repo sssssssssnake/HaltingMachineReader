@@ -1,7 +1,7 @@
 module JavaFilesAnalyzer
     use fileManager, only: containsString, getTextBetweenStrings,&
      replaceCharacterInString, getFilenameFromPathNoExtention
-    use javaAnalysisTypes, only: JavaFile, TokenizedJavaFile
+    use javaAnalysisTypes, only: JavaFile, PrepareTokeizedFile
     implicit none
     
     private
@@ -17,7 +17,7 @@ module JavaFilesAnalyzer
     
     type(JavaFile) :: mainFile
 
-    type(TokenizedJavaFile), allocatable, dimension(:) :: javaFiles
+    type(PrepareTokeizedFile), allocatable, dimension(:) :: javaFiles
     
     contains
 

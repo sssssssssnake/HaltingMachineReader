@@ -37,8 +37,8 @@ module javaAnalysisTypes
         character(:), allocatable, dimension(:, :) :: preparedLines
         contains 
         procedure :: initializePrepareTokeizedFile
-        ! procedure :: printTokenizedJavaFile
-        ! procedure :: tokenizeCodeLines
+        procedure :: readJavaCodeBlocks
+        ! procedure :: printPreTokenizedJavaFile
     end type PrepareTokeizedFile
 
     type :: bracket
@@ -154,8 +154,8 @@ module javaAnalysisTypes
     end subroutine initializePrepareTokeizedFile
 
 
-    subroutine readJavaCodeBlocks(fileToAnalyze, fileToBeTokenized)
-        type(PrepareTokeizedFile), intent(in) :: fileToAnalyze
+    subroutine readJavaCodeBlocks(this, fileToBeTokenized)
+        class(PrepareTokeizedFile), intent(in) :: this
         character(:), allocatable, dimension(:), intent(out) :: fileToBeTokenized
 
         character(:), allocatable, dimension(:) :: originalFile
@@ -164,10 +164,11 @@ module javaAnalysisTypes
         integer :: numberOfCharacters
         type(bracket), target, dimension(1000) :: brackets
 
-        do i= 1, size(fileToAnalyze%codeLines)
-            workingLine = fileToAnalyze%codeLines(i)
-            
+        do i= 1, size(this%codeLines)
+            workingLine = this%codeLines(i)
+            numberOfCharacters = numberOfCharacters + len(trim(adjustl(workingLine)))
         end do
+        print *, "There are ", numberOfCharacters, " characters in the file ", this%relativeFilePath
 
 
     end subroutine readJavaCodeBlocks
