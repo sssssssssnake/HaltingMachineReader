@@ -233,11 +233,11 @@ module fileManager
         fileContents = modifiedFile
         lastLine = lineCounter
 
-        ! deallocate(originalFile)
-        ! ! deallocate(modifiedFile)
-        ! deallocate(workingLine)
-        ! deallocate(importkeyword)
-        ! deallocate(packageKeyword)
+        deallocate(originalFile)
+        deallocate(modifiedFile)
+        deallocate(workingLine)
+        deallocate(importkeyword)
+        deallocate(packageKeyword)
 
 
 
