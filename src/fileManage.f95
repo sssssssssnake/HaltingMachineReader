@@ -173,7 +173,7 @@ module fileManager
 
     end function fileExisits
 
-    subroutine readJavaFile(filePath, fileContents, fileExists )
+    subroutine readJavaFile(filePath, fileContents, fileExists)
         character(:), allocatable, intent(in) :: filePath
         character(:), allocatable, dimension(:), intent(out) :: fileContents
         logical, optional, intent(out) :: fileExists
@@ -181,7 +181,7 @@ module fileManager
         character(:), allocatable, dimension(:) :: originalFile
         character(:), allocatable, dimension(:) :: modifiedFile
         character(:), allocatable :: workingLine, importkeyword, packageKeyword
-        integer :: i, endingLine, lineCounter
+        integer :: i, endingLine, lineCounter, lineSetter
         
         lineCounter = 0
         importkeyword = "import"
@@ -210,6 +210,33 @@ module fileManager
                 lineCounter = lineCounter + 1
             end if
         end do
+
+        print *, "Number of lines: ", lineCounter
+
+        allocate(character(size(originalFile)) :: modifiedFile(lineCounter))
+
+        lineSetter = 1
+        do i = 1, lineCounter
+            workingLine = originalFile(i)
+            if ( containsString(importkeyword, workingLine) .or. &
+                containsString(packageKeyword, workingLine) .or. &
+                len(trim(originalFile(i)) ) .eq. 0 ) then
+                cycle
+            else
+                modifiedFile(lineSetter) = originalFile(i)
+                lineSetter = lineSetter + 1
+            end if
+        end do
+
+        print *, "Number of lines in modifiedFile: ", size(modifiedFile)
+
+        fileContents = modifiedFile
+
+        deallocate(originalFile)
+        deallocate(modifiedFile)
+        deallocate(workingLine)
+        deallocate(importkeyword)
+        deallocate(packageKeyword)
 
 
 
