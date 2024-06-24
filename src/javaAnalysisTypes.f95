@@ -4,7 +4,7 @@ module javaAnalysisTypes
     
 
     private
-    public :: JavaFile, TokenizedJavaFile
+    public :: JavaFile, PrepareTokeizedFile
     type :: JavaFile
         character(:), allocatable :: relativeFilePath
         character(:), allocatable :: className
@@ -27,19 +27,19 @@ module javaAnalysisTypes
 
     end type Import
 
-    type :: TokenizedJavaFile
+    type :: PrepareTokeizedFile
         character(:), allocatable :: relativeFilePath
         character(:), allocatable :: className
         character(:), allocatable :: packageName
         type(Import), allocatable, dimension(:) :: imports
         integer, allocatable, dimension(:) :: importLines
         character(:), allocatable, dimension(:) :: codeLines
-        character(:), allocatable, dimension(:, :) :: tokenizedCodeLines
+        character(:), allocatable, dimension(:, :) :: preparedLines
         contains 
-        procedure :: initializeTokenizedJavaFile
+        procedure :: initializePrepareTokeizedFile
         ! procedure :: printTokenizedJavaFile
         ! procedure :: tokenizeCodeLines
-    end type TokenizedJavaFile
+    end type PrepareTokeizedFile
 
     contains
 
@@ -123,16 +123,16 @@ module javaAnalysisTypes
 
     end subroutine resolveImportsToPaths
 
-    !> Is essentially a constructor for the TokenizedJavaFile type
-    !! @param this The TokenizedJavaFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
+    !> Is essentially a constructor for the PrepareTokeizedFile type
+    !! @param this The PrepareTokeizedFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
     !! @param relativeFilePath The relative file path of the Java file
     !! @param className The name of the class in the Java
     !! @param packageName The package name of the Java file
     !! @param imports The imports of the Java file
     !! @param importLines The import lines of the Java file
     !! @param codeLines The code lines of the Java file
-    subroutine initializeTokenizedJavaFile(this, relativeFilePath, className, packageName, imports, importLines, codeLines)
-        class(TokenizedJavaFile), intent(inout) :: this
+    subroutine initializePrepareTokeizedFile(this, relativeFilePath, className, packageName, imports, importLines, codeLines)
+        class(PrepareTokeizedFile), intent(inout) :: this
         character(:), allocatable, intent(in) :: relativeFilePath
         character(:), allocatable, intent(in) :: className
         character(:), allocatable, intent(in) :: packageName
@@ -146,7 +146,15 @@ module javaAnalysisTypes
         this%imports = imports
         this%importLines = importLines
         this%codeLines = codeLines
-    end subroutine initializeTokenizedJavaFile
+    end subroutine initializePrepareTokeizedFile
+
+
+    subroutine readJavaCodeBlocks(filePath, fileToBeTokenized)
+        type(PrepareTokeizedFile), intent(in) :: filePath
+        character(:), allocatable, dimension(:), intent(out) :: fileToBeTokenized
+
+        character(:), allocatable, dimension(:) :: originalFile
+    end subroutine readJavaCodeBlocks
 
     
 
