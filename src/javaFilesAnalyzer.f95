@@ -74,8 +74,7 @@ module JavaFilesAnalyzer
             packageLineTrue = 1
         end if
 
-        print *, "number of imports: ", numberOfImports
-        print *, "hasPackage: ", packageLineTrue
+
         ! now to look at the important filePaths
         allocate(character(256) :: keyPaths(numberOfImports + packageLineTrue))
 
@@ -109,8 +108,8 @@ module JavaFilesAnalyzer
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName,&
              javaPackageParsed, javaImports)
             call mainFile%resolveImportsToPaths
-            print *, "Printing the mainFile"
-            call mainFile%printJavaFile
+            ! print *, "Printing the mainFile"
+            ! call mainFile%printJavaFile
         else if ( .not. hasPackage ) then
             allocate(character(256) :: javaImports(numberOfImports))
             do i= 1, numberOfImports
@@ -120,8 +119,8 @@ module JavaFilesAnalyzer
             mainClassName = getFilenameFromPathNoExtention(sourceDirectory)
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName, blankString, javaImports)
             call mainFile%resolveImportsToPaths
-            print *, "Printing the mainFile"
-            call mainFile%printJavaFile
+            ! print *, "Printing the mainFile"
+            ! call mainFile%printJavaFile
                 
         end if
 
