@@ -3,10 +3,9 @@ package javacode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import static javacode.coolpackage.OrganizedChaos.five; // Import all classes in the package
-import javacode.coolpackage.RandomLogic; // Import all static classes in the package
-import java.util.Arrays.*; // Import all classes in the package  
-import javacode.coolpackage.OrganizedChaos;
+import javacode.coolpackage.OrganizedChaos; // Import all classes in the package
+import static javacode.coolpackage.OrganizedChaos.five; // Import all static classes in the package
+import javacode.coolpackage.RandomLogic; // Import all classes in the package  
 @SuppressWarnings("unused")
 public class Main {
     // Main method
