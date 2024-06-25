@@ -17,7 +17,8 @@ module fileManager
     !! @param fileContents The contents of the file.
     !! @param endingLine The line number where the file reading should stop.
     !! 
-    !! @return the file contents in the second argument and the line number where the file reading stopped in the third argument.
+    !! @return the file contents in the second argument and the line number where 
+    !! the file reading stopped in the third argument.
     !! 
     !! Note: This subroutine assumes that the file exists and is accessible.
     !! The file contents are stored in the `fileContents` variable.
@@ -182,9 +183,10 @@ module fileManager
         logical, optional, intent(out) :: fileExists
 
         character(:), allocatable, dimension(:) :: originalFile
-        character(:), allocatable, dimension(:) :: modifiedFile
+        character(:), allocatable, dimension(:) :: modifiedFile, fileWithoutComments
         character(:), allocatable :: workingLine, importkeyword, packageKeyword
         integer :: i, endingLine, lineCounter, lineSetter
+        logical :: blockComment
         lineCounter = 0
         importkeyword = "import"
         packageKeyword = "package"
@@ -232,19 +234,85 @@ module fileManager
             end if
         end do
 
+        ! now the the modified file has been created, we need to remove the comments
+        ! the package and import statements have already been removed
+
+        lineCounter = 0
+        blockComment = .false.
+        do i = 1, size(modifiedFile)
+            workingLine = modifiedFile(i)
+            if ( index(workingLine, "//") .gt. 0 &
+            .or. index(workingLine, "/*") .gt. 0 &
+            .or. blockComment) then
+                print *, "workingLine: ", trim(adjustl(workingLine))
+                if ( blockComment ) then
+                    if ( index(workingLine, "*/") .gt. 0 ) then
+                        blockComment = .false.
+                    end if
+                else
+                    if ( index(workingLine, "/*") .gt. 0 ) then
+                        blockComment = .true.
+                    else
+                    end if
+                end if
+            else
+                lineCounter = lineCounter + 1
+            end if
+        end do
+
+        print *, "lineCounter: ", lineCounter
+
+        allocate(character(size(originalFile)) :: fileWithoutComments(lineCounter))
+        blockComment = .false.
+        lineSetter = 1
+        do i = 1, size(modifiedFile)
+            workingLine = modifiedFile(i)
+            if ( index(workingLine, "//") .gt. 0 &
+            .or. index(workingLine, "/*") .gt. 0 &
+            .or. blockComment) then
+                if ( blockComment ) then
+                    if ( index(workingLine, "*/") .gt. 0 ) then
+                        blockComment = .false.
+                    end if
+                else
+                    if ( index(workingLine, "/*") .gt. 0 ) then
+                        blockComment = .true.
+                    else
+                    end if
+                end if
+            else
+                ! fileWithoutComments(lineSetter) = modifiedFile(i)
+                lineSetter = lineSetter + 1
+            end if
+        end do
+        print *, "lineCounter: ", lineCounter
+        print *, "lineSetter: ", lineSetter
+        if ( allocated(fileWithoutComments) ) then
+            print *, "fileWithoutComments is allocated"
+        else
+            print *, "fileWithoutComments is not allocated"
+        end if
+        if ( allocated(modifiedFile) ) then
+            print *, "modifiedFile is allocated"
+        else
+            print *, "modifiedFile is not allocated"
+        end if
+
+
+
         print *, "Number of lines in modifiedFile: ", size(modifiedFile)
 
-        fileContents = modifiedFile
+        fileContents = fileWithoutComments
         lastLine = lineCounter
 
-        deallocate(originalFile)
-        deallocate(modifiedFile)
-        deallocate(workingLine)
-        deallocate(importkeyword)
-        deallocate(packageKeyword)
+        ! deallocate(originalFile)
+        ! deallocate(modifiedFile)
+        ! deallocate(workingLine)
+        ! deallocate(importkeyword)
+        ! deallocate(packageKeyword)
 
 
-
+        print *, "Read java file: ", filePath
     end subroutine readJavaFile
 
 

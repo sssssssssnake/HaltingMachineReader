@@ -42,23 +42,24 @@ program HelloWorld
 
 
     call readJavaFile(myFilePath, testFileContents, endingLine)
-    do i = 1, endingLine
-        print *, trim(testFileContents(i)), len(trim(testFileContents(i)))
-        characterCounter = characterCounter + len(trim(adjustl(testFileContents(i))))
-        lineCounter = lineCounter + 1
-    end do
-    print *, "The number of characters in the file is: ", characterCounter
-    print *, "The number of lines in the file is: ", lineCounter
+    print *, "The number of lines in the file is: ", endingLine
+    ! do i = 1, endingLine
+    !     print *, trim(testFileContents(i)), len(trim(testFileContents(i)))
+    !     characterCounter = characterCounter + len(trim(adjustl(testFileContents(i))))
+    !     lineCounter = lineCounter + 1
+    ! end do
+    ! print *, "The number of characters in the file is: ", characterCounter
+    ! print *, "The number of lines in the file is: ", lineCounter
 
-    allocate(javaFiles(1))
-    javaFiles(1)%className = mainFile%className
-    javaFiles(1)%packageName = mainFile%packageName
-    javaFiles(1)%codeLines = testFileContents
+    ! allocate(javaFiles(1))
+    ! javaFiles(1)%className = mainFile%className
+    ! javaFiles(1)%packageName = mainFile%packageName
+    ! javaFiles(1)%codeLines = testFileContents
 
-    call javaFiles(1)%readJavaCodeBlocks()
+    ! call javaFiles(1)%readJavaCodeBlocks()
 
 
     ! Deallocate the memory
-    deallocate(myFileContents)
-    deallocate(myFilePath)
+    ! deallocate(myFileContents)
+    ! deallocate(myFilePath)
 end program HelloWorld
