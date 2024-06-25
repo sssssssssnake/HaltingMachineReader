@@ -48,6 +48,20 @@ module javaAnalysisTypes
         logical :: isClosing
         type(bracket), pointer :: matchingBracket
     end type bracket
+
+    type :: token
+        integer :: twordType
+        integer :: twordNumber
+        character(:), allocatable :: tokenName
+        ! This contains all the stuff that is in the token
+        ! i.e. "print(var1, var2)" would be in the tokenContent
+        ! where tokenName = "print
+        ! and tokenContent = "print(var1, var2)"
+        character(:), allocatable :: tokenContent
+        logical :: isChild, isParent
+        type(token), pointer :: previousToken
+        type(token), pointer, dimension(:) :: nextToken
+    end type token
     contains
 
     !> Is essentially a constructor for the JavaFile type
