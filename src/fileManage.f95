@@ -244,7 +244,6 @@ module fileManager
             if ( index(workingLine, "//") .gt. 0 &
             .or. index(workingLine, "/*") .gt. 0 &
             .or. blockComment) then
-                print *, "workingLine: ", trim(adjustl(workingLine))
                 if ( blockComment ) then
                     if ( index(workingLine, "*/") .gt. 0 ) then
                         blockComment = .false.
@@ -260,7 +259,6 @@ module fileManager
             end if
         end do
 
-        print *, "lineCounter: ", lineCounter
 
         allocate(character(size(originalFile)) :: fileWithoutComments(lineCounter))
         blockComment = .false.
@@ -285,22 +283,12 @@ module fileManager
                 lineSetter = lineSetter + 1
             end if
         end do
-        print *, "lineCounter: ", lineCounter
-        print *, "lineSetter: ", lineSetter
-        if ( allocated(fileWithoutComments) ) then
-            print *, "fileWithoutComments is allocated"
-        else
-            print *, "fileWithoutComments is not allocated"
-        end if
-        if ( allocated(modifiedFile) ) then
-            print *, "modifiedFile is allocated"
-        else
-            print *, "modifiedFile is not allocated"
-        end if
+
 
 
 
         print *, "Number of lines in modifiedFile: ", size(modifiedFile)
+        print *, "Number of lines in fileWithoutComments: ", size(fileWithoutComments)
 
         fileContents = fileWithoutComments
         lastLine = lineCounter
