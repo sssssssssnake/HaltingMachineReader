@@ -25,5 +25,9 @@ public class Main {
         System.out.println(test);
         inner.print();
         System.out.println(five);
+        /*
+         * This is a multiline comment
+         * This is a multiline comment
+         */
     }
 }
