@@ -3,12 +3,12 @@
 program HelloWorld
     use fileManager, only: readFile, replaceCharacterInString, readJavaFile
     use JavaFilesAnalyzer, only: findImportantJavaFiles, setMainFileContent,&
-     setSourceDirectory, mainFile
+     setSourceDirectory, mainFile, javaFiles
     implicit none
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:), testFileContents(:)
     character(:), allocatable :: combinedDirectory
-    integer :: endingLine, i
+    integer :: endingLine, i, characterCounter
 
     
 
@@ -44,7 +44,16 @@ program HelloWorld
     call readJavaFile(myFilePath, testFileContents, endingLine)
     do i = 1, endingLine
         print *, trim(testFileContents(i)), len(trim(testFileContents(i)))
+        characterCounter = characterCounter + len(trim(adjustl(testFileContents(i))))
     end do
+    print *, "The number of characters in the file is: ", characterCounter
+
+    allocate(javaFiles(1))
+    javaFiles(1)%className = mainFile%className
+    javaFiles(1)%packageName = mainFile%packageName
+    javaFiles(1)%codeLines = testFileContents
+
+    call javaFiles(1)%readJavaCodeBlocks()
 
 
     ! Deallocate the memory
