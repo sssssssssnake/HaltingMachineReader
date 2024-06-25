@@ -293,11 +293,11 @@ module fileManager
         fileContents = fileWithoutComments
         lastLine = lineCounter
 
-        ! deallocate(originalFile)
-        ! deallocate(modifiedFile)
-        ! deallocate(workingLine)
-        ! deallocate(importkeyword)
-        ! deallocate(packageKeyword)
+        deallocate(originalFile)
+        deallocate(modifiedFile)
+        deallocate(workingLine)
+        deallocate(importkeyword)
+        deallocate(packageKeyword)
 
 
         print *, "Read java file: ", filePath
