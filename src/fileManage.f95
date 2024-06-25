@@ -281,7 +281,7 @@ module fileManager
                     end if
                 end if
             else
-                ! fileWithoutComments(lineSetter) = modifiedFile(i)
+                fileWithoutComments(lineSetter) = modifiedFile(i)
                 lineSetter = lineSetter + 1
             end if
         end do
