@@ -59,8 +59,10 @@ module javaAnalysisTypes
         ! and tokenContent = "print(var1, var2)"
         character(:), allocatable :: tokenContent
         logical :: isChild, isParent
+        logical :: isClass, isMethod
         type(token), pointer :: previousToken
         type(token), pointer, dimension(:) :: nextToken
+        type(token), pointer :: parentClass
     end type token
     contains
 
