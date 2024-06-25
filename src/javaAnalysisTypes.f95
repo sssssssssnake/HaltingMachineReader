@@ -188,6 +188,7 @@ module javaAnalysisTypes
                 workingCharacterNumber = workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1
             end if
         end do
+        print *, "The size of the new file is ", size(this%codeLines), " : ", workingCharacterNumber
 
         bracketCounter = 0
         bracketDepth = 0
@@ -271,6 +272,8 @@ module javaAnalysisTypes
             print *, "braces do not match"
             return
         end if
+
+        print *, originalFile
 
 
 

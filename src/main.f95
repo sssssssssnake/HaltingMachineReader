@@ -8,7 +8,7 @@ program HelloWorld
     character(:), allocatable :: myFilePath
     character(:), allocatable :: myFileContents(:), testFileContents(:)
     character(:), allocatable :: combinedDirectory
-    integer :: endingLine, i, characterCounter
+    integer :: endingLine, i, characterCounter, lineCounter
 
     
 
@@ -45,8 +45,10 @@ program HelloWorld
     do i = 1, endingLine
         print *, trim(testFileContents(i)), len(trim(testFileContents(i)))
         characterCounter = characterCounter + len(trim(adjustl(testFileContents(i))))
+        lineCounter = lineCounter + 1
     end do
     print *, "The number of characters in the file is: ", characterCounter
+    print *, "The number of lines in the file is: ", lineCounter
 
     allocate(javaFiles(1))
     javaFiles(1)%className = mainFile%className
