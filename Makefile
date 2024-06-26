@@ -12,7 +12,8 @@ build: clean
 	@gfortran -c src/javaAnalysisTypes.f95
 	@gfortran -c src/fileManage.f95
 	@gfortran -c src/javaFilesAnalyzer.f95
-	@gfortran -o program src/main.f95 fileManage.o javaFilesAnalyzer.o javaAnalysisTypes.o -g
+	@gfortran -c src/analyzeJavaProject.f95
+	@gfortran -o program src/main.f95 fileManage.o javaFilesAnalyzer.o javaAnalysisTypes.o analyzeJavaProject.o -g
 
 clean:
 	@# if the file exists, remove it
@@ -24,6 +25,8 @@ clean:
 	@if [ -f javafilesanalyzer.mod ]; then rm -f javafilesanalyzer.mod; fi
 	@if [ -f javaanalysistypes.mod ]; then rm -f javaanalysistypes.mod; fi
 	@if [ -f javaAnalysisTypes.o ]; then rm -f javaAnalysisTypes.o; fi
+	@if [ -f analyzeJavaProject.o ]; then rm -f analyzeJavaProject.o; fi
+	@if [ -f analyzeJavaProject.mod ]; then rm -f analyzeJavaProject.mod; fi
 	@if [ -f file10 ]; then rm file10; fi
 
 
