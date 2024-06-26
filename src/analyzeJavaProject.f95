@@ -5,6 +5,12 @@ module analyzeJavaProject
     type(JavaFile), pointer :: mainFile
     type(JavaFile), dimension(:), allocatable, target :: allFiles
     integer :: numFiles
-    ! Add your code here
+
+    contains
+
+
+
+
+
 
 end module analyzeJavaProject

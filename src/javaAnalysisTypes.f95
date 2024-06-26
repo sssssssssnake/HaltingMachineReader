@@ -64,10 +64,20 @@ module javaAnalysisTypes
         type(token), pointer, dimension(:) :: nextToken
         type(token), pointer :: parentClass
     end type token
+
+    type :: codeBlock 
+        ! a code block is a block of code that is surrounded by brackets
+        ! it can be a method, a class, a loop, an if statement, etc.
+        ! it is code that get jumped to and from (crucial for analyzing if smething stops)
+        ! i.e. { code block }
+    
+
+    end type codeBlock
     contains
 
     !> Is essentially a constructor for the JavaFile type
-    !! @param this The JavaFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
+    !! @param this The JavaFile object to be initialized you don't need to pass this in,
+    !! it's done automatically by the compiler
     !! @param relativeFilePath The relative file path of the Java file
     !! @param className The name of the class in the Java
     !! @param packageName The package name of the Java file
@@ -147,7 +157,8 @@ module javaAnalysisTypes
     end subroutine resolveImportsToPaths
 
     !> Is essentially a constructor for the PrepareTokeizedFile type
-    !! @param this The PrepareTokeizedFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
+    !! @param this The PrepareTokeizedFile object to be initialized you don't need to pass this in,
+    !! it's done automatically by the compiler
     !! @param relativeFilePath The relative file path of the Java file
     !! @param className The name of the class in the Java
     !! @param packageName The package name of the Java file
@@ -173,7 +184,8 @@ module javaAnalysisTypes
 
 
     !> Reads the Java code blocks and pretokenizes them
-    !! @param this The PrepareTokeizedFile object to be initialized you don't need to pass this in, it's done automatically by the compiler
+    !! @param this The PrepareTokeizedFile object to be initialized you don't need to pass this in,
+    !! it's done automatically by the compiler
     subroutine readJavaCodeBlocks(this)
         class(PrepareTokeizedFile), intent(inout) :: this
 
@@ -241,7 +253,8 @@ module javaAnalysisTypes
         end do
 
         if (bracketCounter .ne. reverseBracketCounter) then
-            print *, "Bracket Counter: ", bracketCounter, " Reverse Bracket Counter: ", reverseBracketCounter
+            print *, "Bracket Counter: ", bracketCounter, " Reverse Bracket Counter: ",&
+             reverseBracketCounter
             print *, "Bracket Depth: ", bracketDepth, " Reverse Bracket Depth: ", reverseBracketDepth
             print *, "Brackets do not match"
             return
