@@ -201,9 +201,6 @@ module javaAnalysisTypes
         do i = 1, size(this%codeLines)
             if ( len(trim(adjustl(this%codeLines(i)))) .gt. 0) then
                 originalFile(workingCharacterNumber:workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1) = trim(adjustl(this%codeLines(i))) // " "
-                print *, "Working Character Number: ", workingCharacterNumber
-                print *, "Math: ", (workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1) - workingCharacterNumber
-                print *, "Working Line: ", trim(this%codeLines(i)), " : ", len(trim(adjustl(this%codeLines(i))))
                 workingCharacterNumber = workingCharacterNumber + len(trim(adjustl(this%codeLines(i)))) + 1
             end if
         end do

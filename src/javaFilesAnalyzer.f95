@@ -109,8 +109,8 @@ module JavaFilesAnalyzer
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName,&
              javaPackageParsed, javaImports)
             call mainFile%resolveImportsToPaths
-            ! print *, "Printing the mainFile"
-            ! call mainFile%printJavaFile
+            print *, "Printing the mainFile"
+            call mainFile%printJavaFile
         else if ( .not. hasPackage ) then
             allocate(character(256) :: javaImports(numberOfImports))
             do i= 1, numberOfImports
@@ -120,8 +120,7 @@ module JavaFilesAnalyzer
             mainClassName = getFilenameFromPathNoExtention(sourceDirectory)
             call mainFile%initializeJavaFile(sourceDirectory, mainClassName, blankString, javaImports)
             call mainFile%resolveImportsToPaths
-            ! print *, "Printing the mainFile"
-            ! call mainFile%printJavaFile
+            call mainFile%printJavaFile
                 
         end if
 

@@ -43,11 +43,7 @@ program HelloWorld
 
     call readJavaFile(myFilePath, testFileContents, endingLine)
     print *, "The number of lines in the file is: ", endingLine
-    do i = 1, endingLine
-        print *, trim(testFileContents(i)), len(trim(testFileContents(i)))
-        characterCounter = characterCounter + len(trim(adjustl(testFileContents(i))))
-        lineCounter = lineCounter + 1
-    end do
+
     print *, "The number of characters in the file is: ", characterCounter
     print *, "The number of lines in the file is: ", lineCounter
 
