@@ -70,7 +70,15 @@ module javaAnalysisTypes
         ! it can be a method, a class, a loop, an if statement, etc.
         ! it is code that get jumped to and from (crucial for analyzing if smething stops)
         ! i.e. { code block }
-    
+        character(:), allocatable :: filePath
+        character(:), allocatable :: blockName
+        ! This is the path within the file that the block is located
+        ! i.e. if the block is in a method, the path would be the class.*.method
+        ! for however many classes the method is nested in
+        character(:), allocatable :: pathWitinFile
+        integer :: blockType
+        character(:), allocatable :: blockContent
+        type(token) :: tokens
 
     end type codeBlock
     contains
