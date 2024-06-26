@@ -75,7 +75,7 @@ module javaAnalysisTypes
         ! This is the path within the file that the block is located
         ! i.e. if the block is in a method, the path would be the class.*.method
         ! for however many classes the method is nested in
-        character(:), allocatable :: pathWitinFile
+        character(:), allocatable :: pathWithinFile
         integer :: blockType
         character(:), allocatable :: blockContent
         type(token) :: tokens
