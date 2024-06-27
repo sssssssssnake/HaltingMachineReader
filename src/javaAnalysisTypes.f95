@@ -49,38 +49,7 @@ module javaAnalysisTypes
         type(bracket), pointer :: matchingBracket
     end type bracket
 
-    type :: token
-        integer :: twordType
-        integer :: twordNumber
-        character(:), allocatable :: tokenName
-        ! This contains all the stuff that is in the token
-        ! i.e. "print(var1, var2)" would be in the tokenContent
-        ! where tokenName = "print
-        ! and tokenContent = "print(var1, var2)"
-        character(:), allocatable :: tokenContent
-        logical :: isChild, isParent
-        logical :: isClass, isMethod
-        type(token), pointer :: previousToken
-        type(token), pointer, dimension(:) :: nextToken
-        type(token), pointer :: parentClass
-    end type token
 
-    type :: codeBlock 
-        ! a code block is a block of code that is surrounded by brackets
-        ! it can be a method, a class, a loop, an if statement, etc.
-        ! it is code that get jumped to and from (crucial for analyzing if smething stops)
-        ! i.e. { code block }
-        character(:), allocatable :: filePath
-        character(:), allocatable :: blockName
-        ! This is the path within the file that the block is located
-        ! i.e. if the block is in a method, the path would be the class.*.method
-        ! for however many classes the method is nested in
-        character(:), allocatable :: pathWithinFile
-        integer :: blockType
-        character(:), allocatable :: blockContent
-        type(token) :: tokens
-
-    end type codeBlock
     contains
 
     !> Is essentially a constructor for the JavaFile type
