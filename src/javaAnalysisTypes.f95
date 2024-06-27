@@ -49,13 +49,14 @@ module javaAnalysisTypes
         type(bracket), pointer :: matchingBracket
     end type bracket
 
-    type :: object
+    type :: Object
         character(len=256) :: Name        ! name of the class, method, or variable
         character(len=256) :: Location   ! file path or directory location where it's defined
-        logical :: RunsCode
-        logical :: javaProvided
+        type(LocalObject), dimension(:), allocatable :: Locals  ! array of local objects (optional)
+        type(CodeBlock), dimension(:), allocatable :: CodeBlocks  ! array of code blocks (optional)
+        logical :: HasCode         ! indicates if this object has code
 
-    end type object
+    end type Object
 
     type :: Method
         character(len=256) :: Name         ! name of the method
