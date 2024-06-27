@@ -82,7 +82,7 @@ module javaAnalysisTypes
         character(len=256) :: Name          ! name of the code block (e.g., a method or constructor)
         logical :: ReturnsSomething         ! indicates if this code block returns something
         type(Object), dimension(:), allocatable :: LocalObjects
-        type(Parameter), pointer, dimension(:) :: ObjectsPassedIn => null() ! pointer to the parameters
+        type(Parameter), pointer, dimension(:) :: InParamaters => null() ! pointer to the parameters
         integer :: LocationIndex            ! index into the file paths array
         character(len=256) :: CodeString    ! string representation of the code block (e.g., a constructor's implementation)
     end type CodeBlock
