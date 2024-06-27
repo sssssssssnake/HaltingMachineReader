@@ -54,6 +54,10 @@ program HelloWorld
 
     call javaFiles(1)%readJavaCodeBlocks()
 
+    allocate(mainFile%prepareTokeizedFile)
+    mainFile%prepareTokeizedFile = javaFiles(1)
+
+
 
     ! Deallocate the memory
     deallocate(myFileContents)

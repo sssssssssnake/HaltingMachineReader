@@ -11,6 +11,7 @@ module javaAnalysisTypes
         character(:), allocatable :: packageName
         character(:), allocatable, dimension(:) :: imports
         type(Import), allocatable, dimension(:) :: importObjects
+        type(PrepareTokeizedFile), pointer :: prepareTokeizedFile
 
         contains
         procedure :: initializeJavaFile

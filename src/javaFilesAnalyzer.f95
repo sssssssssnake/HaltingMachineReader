@@ -18,7 +18,7 @@ module JavaFilesAnalyzer
     
     type(JavaFile), target :: mainFile
 
-    type(PrepareTokeizedFile), allocatable, dimension(:) :: javaFiles
+    type(PrepareTokeizedFile), allocatable, dimension(:), target :: javaFiles
     
     contains
 
