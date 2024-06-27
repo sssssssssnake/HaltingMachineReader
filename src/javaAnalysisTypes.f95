@@ -53,20 +53,22 @@ module javaAnalysisTypes
         character(len=256) :: Name          ! name of the class, method, or variable
         character(len=256) :: Location      ! file path or directory location where it's defined
         ! locals is null if the object is null. If the object is a class, then locals is an array of local objects
-        type(LocalObject), dimension(:), allocatable :: Locals  ! array of local objects
+        type(Object), dimension(:), allocatable :: Locals       ! array of local objects
         type(Method), dimension(:), allocatable :: Methods      ! array of method objects
-        type(Method), pointer :: Constructor => null()          ! pointer to the constructor
+        type(Method), pointer, dimension(:) :: Constructors => null()          ! pointer to the constructor
 
         logical :: HasCode  ! indicates if this object has code
 
     end type Object
 
     type :: Method
-        character(len=256) :: Name         ! name of the method
-        character(len=256) :: ReturnType  ! return type (e.g., "integer", "real")
-        logical :: ReturnsSomething  ! indicates if this method returns something
+        character(len=256) :: Name          ! name of the method
+        character(len=256) :: ReturnType    ! return type (e.g., "integer", "real")
+        logical :: ReturnsSomething         ! indicates if this method returns something
+        logical :: IsConstructor            ! indicates if this method is a constructor
 
         type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter objects
+        ! type
         integer :: LocationIndex   ! index into the file paths array
     end type Method
 
@@ -75,16 +77,12 @@ module javaAnalysisTypes
         character(len=256) :: Name         ! name of the parameter
     end type Parameter
 
-    type :: LocalObject
-        character(len=256) :: Name        ! name of the local object (e.g., a variable)
-        type(Object), pointer :: Type => null()  ! pointer to the local object's type
-        logical :: IsArray  ! indicates if this is an array or not
-    end type LocalObject
 
     type :: CodeBlock
         character(len=256) :: Name         ! name of the code block (e.g., a method or constructor)
         logical :: ReturnsSomething  ! indicates if this code block returns something
         type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter objects
+        ! type
         integer :: LocationIndex   ! index into the file paths array
         character(len=256) :: CodeString  ! string representation of the code block (e.g., a constructor's implementation)
     end type CodeBlock
