@@ -52,12 +52,12 @@ module javaAnalysisTypes
     type :: Object
         character(len=256) :: Name          ! name of the class, method, or variable
         character(len=256) :: Location      ! file path or directory location where it's defined
-        ! locals is null if the object is null. If the object is a class, then locals is an array of local objects
-        type(Object), dimension(:), allocatable :: Locals       ! array of local objects
+        type(Object), dimension(:), allocatable :: Variables    ! array of variable objects (encapsulated in the object)
         type(Method), dimension(:), allocatable :: Methods      ! array of method objects
         type(Method), pointer, dimension(:) :: Constructors => null()          ! pointer to the constructor
 
         logical :: HasCode  ! indicates if this object has code
+        logical :: javaProvided  ! indicates if this object is provided by Java
 
     end type Object
 
@@ -79,12 +79,12 @@ module javaAnalysisTypes
 
 
     type :: CodeBlock
-        character(len=256) :: Name         ! name of the code block (e.g., a method or constructor)
-        logical :: ReturnsSomething  ! indicates if this code block returns something
+        character(len=256) :: Name          ! name of the code block (e.g., a method or constructor)
+        logical :: ReturnsSomething         ! indicates if this code block returns something
         type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter objects
         ! type
-        integer :: LocationIndex   ! index into the file paths array
-        character(len=256) :: CodeString  ! string representation of the code block (e.g., a constructor's implementation)
+        integer :: LocationIndex            ! index into the file paths array
+        character(len=256) :: CodeString    ! string representation of the code block (e.g., a constructor's implementation)
     end type CodeBlock
 
 

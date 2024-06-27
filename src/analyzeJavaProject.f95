@@ -6,6 +6,7 @@ module analyzeJavaProject
     type(JavaFile), dimension(:), allocatable, target :: allFiles
     integer :: numFiles
 
+
     contains
 
 
