@@ -52,8 +52,8 @@ module javaAnalysisTypes
     type :: Object
         character(len=256) :: Name        ! name of the class, method, or variable
         character(len=256) :: Location   ! file path or directory location where it's defined
-        type(LocalObject), dimension(:), allocatable :: Locals  ! array of local objects (optional)
-        type(CodeBlock), dimension(:), allocatable :: CodeBlocks  ! array of code blocks (optional)
+        type(LocalObject), dimension(:), allocatable :: Locals  ! array of local objects
+
         logical :: HasCode         ! indicates if this object has code
 
     end type Object
@@ -61,38 +61,30 @@ module javaAnalysisTypes
     type :: Method
         character(len=256) :: Name         ! name of the method
         character(len=256) :: ReturnType  ! return type (e.g., "integer", "real")
-        type(object), pointer :: ReturnValue => null()   ! pointer to returned object
+        logical :: ReturnsSomething  ! indicates if this method returns something
 
-        type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter names or types
+        type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter objects
         integer :: LocationIndex   ! index into the file paths array
     end type Method
 
     type :: Parameter
-        type(object), pointer :: Type => null()  ! pointer to parameter type (e.g., a class)
+        type(Object), pointer :: Type => null()  ! pointer to parameter type (e.g., a class)
         character(len=256) :: Name         ! name of the parameter
-
     end type Parameter
+
     type :: LocalObject
         character(len=256) :: Name        ! name of the local object (e.g., a variable)
-        type(object), pointer :: Type => null()  ! pointer to the local object's type
-
+        type(Object), pointer :: Type => null()  ! pointer to the local object's type
         logical :: IsArray  ! indicates if this is an array or not
     end type LocalObject
 
     type :: CodeBlock
         character(len=256) :: Name         ! name of the code block (e.g., a method or constructor)
         logical :: ReturnsSomething  ! indicates if this code block returns something
-
-        type(object), pointer :: ReturnValue => null()   ! pointer to returned object (optional)
-
         type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter objects
         integer :: LocationIndex   ! index into the file paths array
-
         character(len=256) :: CodeString  ! string representation of the code block (e.g., a constructor's implementation)
-
-        type(LocalObject), dimension(:), allocatable :: Locals ! array of local object instances
     end type CodeBlock
-
 
 
 
