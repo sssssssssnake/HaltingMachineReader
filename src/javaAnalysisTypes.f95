@@ -71,6 +71,27 @@ module javaAnalysisTypes
         character(len=256) :: Name         ! name of the parameter
 
     end type Parameter
+    type :: LocalObject
+        character(len=256) :: Name        ! name of the local object (e.g., a variable)
+        type(object), pointer :: Type => null()  ! pointer to the local object's type
+
+        logical :: IsArray  ! indicates if this is an array or not
+    end type LocalObject
+
+    type :: CodeBlock
+        character(len=256) :: Name         ! name of the code block (e.g., a method or constructor)
+        logical :: ReturnsSomething  ! indicates if this code block returns something
+
+        type(object), pointer :: ReturnValue => null()   ! pointer to returned object (optional)
+
+        type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter objects
+        integer :: LocationIndex   ! index into the file paths array
+
+        character(len=256) :: CodeString  ! string representation of the code block (e.g., a constructor's implementation)
+
+        type(LocalObject), dimension(:), allocatable :: Locals ! array of local object instances
+    end type CodeBlock
+
 
 
 
