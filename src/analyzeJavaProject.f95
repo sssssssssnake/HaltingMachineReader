@@ -8,7 +8,10 @@ module analyzeJavaProject
 
 
     contains
-
+    subroutine SetMainFile(file)
+        type(JavaFile), pointer, intent(in) :: file
+        mainFile => file
+    end subroutine SetMainFile
 
 
 
