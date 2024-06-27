@@ -49,6 +49,31 @@ module javaAnalysisTypes
         type(bracket), pointer :: matchingBracket
     end type bracket
 
+    type :: object
+        character(len=256) :: Name        ! name of the class, method, or variable
+        character(len=256) :: Location   ! file path or directory location where it's defined
+        logical :: RunsCode
+        logical :: javaProvided
+
+    end type object
+
+    type :: Method
+        character(len=256) :: Name         ! name of the method
+        character(len=256) :: ReturnType  ! return type (e.g., "integer", "real")
+        type(object), pointer :: ReturnValue => null()   ! pointer to returned object
+
+        type(Parameter), dimension(:), allocatable :: Parameters ! array of parameter names or types
+        integer :: LocationIndex   ! index into the file paths array
+    end type Method
+
+    type :: Parameter
+        type(object), pointer :: Type => null()  ! pointer to parameter type (e.g., a class)
+        character(len=256) :: Name         ! name of the parameter
+
+    end type Parameter
+
+
+
 
     contains
 
