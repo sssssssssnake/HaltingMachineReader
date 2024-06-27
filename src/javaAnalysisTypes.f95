@@ -50,11 +50,14 @@ module javaAnalysisTypes
     end type bracket
 
     type :: Object
-        character(len=256) :: Name        ! name of the class, method, or variable
-        character(len=256) :: Location   ! file path or directory location where it's defined
+        character(len=256) :: Name          ! name of the class, method, or variable
+        character(len=256) :: Location      ! file path or directory location where it's defined
+        ! locals is null if the object is null. If the object is a class, then locals is an array of local objects
         type(LocalObject), dimension(:), allocatable :: Locals  ! array of local objects
+        type(Method), dimension(:), allocatable :: Methods      ! array of method objects
+        type(Method), pointer :: Constructor => null()          ! pointer to the constructor
 
-        logical :: HasCode         ! indicates if this object has code
+        logical :: HasCode  ! indicates if this object has code
 
     end type Object
 
@@ -68,7 +71,7 @@ module javaAnalysisTypes
     end type Method
 
     type :: Parameter
-        type(Object), pointer :: Type => null()  ! pointer to parameter type (e.g., a class)
+        type(Object), pointer :: inputObject => null()  ! pointer to parameter type (e.g., a class)
         character(len=256) :: Name         ! name of the parameter
     end type Parameter
 
