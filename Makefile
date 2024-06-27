@@ -26,7 +26,7 @@ clean:
 	@if [ -f javaanalysistypes.mod ]; then rm -f javaanalysistypes.mod; fi
 	@if [ -f javaAnalysisTypes.o ]; then rm -f javaAnalysisTypes.o; fi
 	@if [ -f analyzeJavaProject.o ]; then rm -f analyzeJavaProject.o; fi
-	@if [ -f analyzeJavaProject.mod ]; then rm -f analyzeJavaProject.mod; fi
+	@if [ -f analyzejavaproject.mod ]; then rm -f analyzejavaproject.mod; fi
 	@if [ -f file10 ]; then rm file10; fi
 
 
