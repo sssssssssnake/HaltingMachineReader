@@ -34,7 +34,7 @@ module javaAnalysisTypes
         type(Import), allocatable, dimension(:) :: imports
         integer, allocatable, dimension(:) :: importLines
         character(:), allocatable, dimension(:) :: codeLines
-        character(:), allocatable, dimension(:, :) :: preparedLines
+        character(:), allocatable :: preTokenizedCode
         contains 
         procedure :: initializePrepareTokeizedFile
         procedure :: readJavaCodeBlocks
@@ -320,7 +320,7 @@ module javaAnalysisTypes
         end if
 
         print *, originalFile
-
+        this%preTokenizedCode = originalFile
 
 
     end subroutine readJavaCodeBlocks
